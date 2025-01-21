@@ -17,12 +17,13 @@ class Solution:
             return 0
         
         for i in range(len(data)):
+            #Enter the window
             if data[i] == 1:
                 count += 1
             if i < num_ones -1:
                 continue
             ans = min(ans, num_ones - count)
-
+            #Exit the window
             if data[i - num_ones + 1] == 1:
                 count -= 1
         return ans
