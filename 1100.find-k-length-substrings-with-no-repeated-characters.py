@@ -8,8 +8,8 @@
 from collections import Counter
 class Solution:
     def numKLenSubstrNoRepeats(self, s: str, k: int) -> int:
-        #! This is the normal slicing window solution
-        #! O(n) time complexity and the window will go over some repeated substrings that wastes time and space
+        # #! This is the normal slicing window solution
+        # #! O(n) time complexity and the window will go over some repeated substrings that wastes time and space
         # total = 0
         # left, right = 0 ,0
         # window = list()
@@ -20,6 +20,7 @@ class Solution:
         #     if right - left + 1 < k:
         #         right +=1
         #         continue
+        #     #! Be careful about the set() as if k is very big, the window list will also be very big that will make the set() operation very slow. Here I am just being very lucky that it did not trigger any time limit exceeded error
         #     if len(set(window)) < k:
         #         window.remove(s[left])
         #         left += 1

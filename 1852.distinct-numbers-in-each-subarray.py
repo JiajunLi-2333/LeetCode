@@ -8,19 +8,19 @@
 from collections import Counter
 class Solution:
     def distinctNumbers(self, nums: list[int], k: int) -> list[int]:
-        ans = []
-        hashmap = Counter()
+        # ans = []
+        # hashmap = Counter()
 
-        for i in range(len(nums)):
-            hashmap[nums[i]] += 1
-            if i < k -1:
-                continue
-            ans.append(len(hashmap))
+        # for i in range(len(nums)):
+        #     hashmap[nums[i]] += 1
+        #     if i < k -1:
+        #         continue
+        #     ans.append(len(hashmap))
 
-            hashmap[nums[i - k + 1]] -= 1
-            if hashmap[nums[i - k + 1]] == 0:
-                del hashmap[nums[i - k + 1]]
-        return ans
+        #     hashmap[nums[i - k + 1]] -= 1
+        #     if hashmap[nums[i - k + 1]] == 0:
+        #         del hashmap[nums[i - k + 1]]
+        # return ans
 
         #The set() funciton causes too much time complexity
         # ans = [] 
@@ -38,5 +38,19 @@ class Solution:
         #     ans.append(count)
         #     curr_subarray.append(nums[i])
         # return ans
+
+        #todo A new way of using hashmap
+        c = Counter(nums[:k])
+        cur_count = len(c)
+        res = [cur_count]
+        for i in range(k, len(nums)):
+            c[nums[i]] += 1
+            if c[nums[i]] == 1:
+                cur_count += 1
+            c[nums[i-k]] -= 1
+            if c[nums[i-k]] == 0:
+                cur_count -= 1
+            res.append(cur_count)
+        return res
 # @lc code=end
 
