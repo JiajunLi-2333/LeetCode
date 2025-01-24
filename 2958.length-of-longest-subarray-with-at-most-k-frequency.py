@@ -5,8 +5,18 @@
 #
 
 # @lc code=start
+from collections import Counter
 class Solution:
-    def maxSubarrayLength(self, nums: List[int], k: int) -> int:
-        
+    def maxSubarrayLength(self, nums: list[int], k: int) -> int:
+        hashmap = Counter()
+        left = 0
+        ans = 0
+        for i in range(len(nums)):
+            hashmap[nums[i]] += 1
+            while hashmap[nums[i]] > k:
+                hashmap[nums[left]] -= 1
+                left += 1
+            ans = max(ans, i - left  + 1)
+        return ans
 # @lc code=end
 
