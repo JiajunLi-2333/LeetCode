@@ -19,25 +19,37 @@ class Solution:
         #         ave.append(-1)
         # return ave
 
-        #? Slicing window method
-        ave = list()
-        sum = 0
+        # #? Slicing window method
+        # ave = list()
+        # sum = 0
         if k == 0:
             return nums
         if 2*k + 1 > len(nums):
             return [-1] * len(nums)
         
-        for i, c in enumerate(nums):
-            #Enter the window
-            sum += c
-            if i < 2*k:
+        # for i, c in enumerate(nums):
+        #     #Enter the window
+        #     sum += c
+        #     if i < 2*k:
+        #         continue
+        #     ave.append(sum // (2 * k + 1))
+        #     #Exit the window
+        #     sum -= nums[i - 2*k]
+        # for j in range(k):
+        #     ave.insert(0,-1)
+        #     ave.append(-1) 
+        # return ave
+
+        #todo method revised to reduce one for loop
+        ave = [-1] * len(nums)
+        sum = 0
+        window_size = 2 * k + 1
+        for i in range(len(nums)):
+            sum += nums[i]
+            if i < window_size - 1:
                 continue
-            ave.append(sum // (2 * k + 1))
-            #Exit the window
-            sum -= nums[i - 2*k]
-        for j in range(k):
-            ave.insert(0,-1)
-            ave.append(-1) 
+            ave[i - k] = sum // window_size
+            sum -= nums[i - window_size + 1]
         return ave
 # @lc code=end
 

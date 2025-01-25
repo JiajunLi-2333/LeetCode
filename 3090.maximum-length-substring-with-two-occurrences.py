@@ -18,9 +18,6 @@ class Solution:
                     hashmap[s[left]] -= 1
                     left += 1
             ans = max(ans, i - left  +1)
-
-        return ans
-
-        
+        return ans   
 # @lc code=end
 
