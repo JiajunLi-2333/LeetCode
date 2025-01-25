@@ -34,6 +34,7 @@ class Solution:
         hashmap = Counter()
         for i in range(len(nums)):
             cur_sum += nums[i]
+            #todo hint: This condition can be more concise, work on improving it!
             if nums[i] not in hashmap or hashmap[nums[i]] == 0:
                 unique += 1
             hashmap[nums[i]] += 1
