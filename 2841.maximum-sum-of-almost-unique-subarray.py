@@ -8,27 +8,45 @@
 from collections import Counter
 class Solution:
     def maxSum(self, nums: list[int], m: int, k: int) -> int:
-        sum = 0
-        sum_list = []
-        counter_dict = Counter()
-        for i,c in enumerate(nums):
-            sum += c 
-            counter_dict[c] += 1
-            if i <  k-1:
+        # sum = 0
+        # sum_list = []
+        # counter_dict = Counter()
+        # for i,c in enumerate(nums):
+        #     sum += c 
+        #     counter_dict[c] += 1
+        #     if i <  k-1:
+        #         continue
+        #     if len(counter_dict) < m:
+        #         sum -= nums[i - k +1]
+        #         counter_dict[nums[i - k +1]] -= 1
+        #         if counter_dict[nums[i - k +1]] == 0:
+        #             del counter_dict[nums[i - k +1]]
+        #         continue
+        #     sum_list.append(sum)
+        #     #Exit the window
+        #     sum -= nums[i - k +1]
+        #     counter_dict[nums[i - k +1]] -= 1
+        #     if counter_dict[nums[i - k +1]] == 0:
+        #         del counter_dict[nums[i - k +1]]
+        # return max(sum_list) if sum_list else 0
+
+        sum, unique, cur_sum = 0, 0, 0
+        hashmap = Counter()
+        for i in range(len(nums)):
+            cur_sum += nums[i]
+            if nums[i] not in hashmap or hashmap[nums[i]] == 0:
+                unique += 1
+            hashmap[nums[i]] += 1
+            if i < k - 1:
                 continue
-            if len(counter_dict) < m:
-                sum -= nums[i - k +1]
-                counter_dict[nums[i - k +1]] -= 1
-                if counter_dict[nums[i - k +1]] == 0:
-                    del counter_dict[nums[i - k +1]]
-                continue
-            sum_list.append(sum)
-            #Exit the window
-            sum -= nums[i - k +1]
-            counter_dict[nums[i - k +1]] -= 1
-            if counter_dict[nums[i - k +1]] == 0:
-                del counter_dict[nums[i - k +1]]
-        return max(sum_list) if sum_list else 0
+            if unique >= m: sum = max(sum, cur_sum)
+            cur_sum -= nums[i - k + 1]
+            hashmap[nums[i - k + 1]] -= 1
+            if hashmap[nums[i - k + 1]] == 0:
+                unique -= 1
+        return sum
+        
+        
     
 #! I actually made it right, cannot believe it
 # @lc code=end

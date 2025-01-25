@@ -51,5 +51,7 @@ class Solution:
             ave[i - k] = sum // window_size
             sum -= nums[i - window_size + 1]
         return ave
+
+        #! In this question, we have to notice that the window size is not just k but 2k + 1 and for the result, only the middle elements of arr needs to be changed, all the others are just -1. Read the question carefully and examine the result to see if there is any pattern that could benefit the solution.
 # @lc code=end
 
