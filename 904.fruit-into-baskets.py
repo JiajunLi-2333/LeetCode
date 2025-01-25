@@ -8,6 +8,7 @@
 from collections import Counter
 class Solution:
     def totalFruit(self, fruits: list[int]) -> int:
+        #! My way is too slow and inefficient
         # count = 0
         # left = 0
         # genre = Counter()
