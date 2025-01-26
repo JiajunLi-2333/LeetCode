@@ -40,6 +40,7 @@ class Solution:
         #         freq[50 + nums[i - k + 1]] -= 1
         # return ans
 
+        #! This is the most efficient soluton 91.53% faster than all users, using the sorted list method
         neg_list = SortedList()
         ans = []
         neg_count = 0
