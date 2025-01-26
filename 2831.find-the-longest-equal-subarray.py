@@ -5,7 +5,7 @@
 #
 
 # @lc code=start
-from collections import Counter
+from collections import Counter, defaultdict
 class Solution:
     def longestEqualSubarray(self, nums: list[int], k: int) -> int:
         maxf = i = 0
