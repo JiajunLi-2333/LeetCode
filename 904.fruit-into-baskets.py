@@ -30,6 +30,7 @@ class Solution:
         #todo This is a more efficient way of solving this
         count, i = {}, 0
         for j, v in enumerate(fruits):
+            #This because we are using a dictionary but not a counter object, the get method is used to get the value of the key, if the key is not present, it returns 0
             count[v] = count.get(v, 0) + 1
             if len(count) > 2:
                 count[fruits[i]] -= 1

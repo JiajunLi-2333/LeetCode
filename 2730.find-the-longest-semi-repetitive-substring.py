@@ -14,16 +14,20 @@ class Solution:
         #         i += 1
         #         cur -= s[i] == s[i - 1]
         # return len(s) - i  
-        ans = 1
-        left = 0
-        last = 0
-        for i in range(1, len(s)):
-            if s[i] == s[i - 1]:
-                if last != 0: 
-                    left = last
-                last = i
-            ans = max(ans, i - left  +1)
-        return ans
+
+
+        # ans = 1
+        # left = 0
+        # last = 0
+        # for i in range(1, len(s)):
+        #     if s[i] == s[i - 1]:
+        #         if last != 0: 
+        #             left = last
+        #         last = i
+        #     ans = max(ans, i - left  +1)
+        # return ans
+
+
         #ans = 1
         # i = 0
         # j = 1
@@ -38,6 +42,20 @@ class Solution:
         #     j += 1
 
         # return ans
+
+        pair_index = []
+        pair_count, ans, left = 0, 0, 0
+        if len(s) == 1:
+            return 1
+        for i in range(1, len(s)):
+            if s[i] == s[i - 1]:
+                pair_count += 1
+                pair_index.append(i)
+                if pair_count > 1:
+                    left = pair_index.pop(0)
+                    pair_count -= 1
+            ans = max(ans, i - left + 1)
+        return ans
 
 # @lc code=end
 

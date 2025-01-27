@@ -8,6 +8,7 @@
 
 class Solution:
     def longestSubarray(self, nums: list[int]) -> int:
+        #! The key here is to find the window that contains only one zero and return the number of one in that window. The maximum of the output of all windows in the answer
         # count = 0
         # left = 0
         # ans = 0
@@ -42,6 +43,11 @@ class Solution:
                 one_count = max(one_count, j - left + 1)
             ans = max(ans, one_count)
         return ans
+    #! Now This definitely works, but TLE because of so many nested loops. 
+    #! cur_arr = nums[:Zero_index[i]] + nums[Zero_index[i] + 1:] This alone is O(n) and we have to do it n times. The time complexity is O(n^2)
+
+
+    #! We need to examine the property of the problem and the solution to see if we can optimize it.
 
         
 # @lc code=end
