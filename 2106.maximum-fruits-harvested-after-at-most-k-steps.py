@@ -7,16 +7,7 @@
 # @lc code=start
 from itertools import accumulate
 from bisect import bisect_left
-numbers = [1, 2, 3, 4]
 
-# Default behavior: running sum
-result = list(accumulate(numbers))
-# result = [1, 3, 6, 10]
-
-# Using a custom binary function, e.g., multiplication
-import operator
-result_mul = list(accumulate(numbers, operator.mul))
-# result_mul = [1, 2, 6, 24]
 class Solution:
     def maxTotalFruits(self, fruits: list[list[int]], startPos: int, k: int) -> int:
 
