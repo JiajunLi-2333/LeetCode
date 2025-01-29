@@ -18,7 +18,6 @@ class Solution:
                 if hashmap[s[left]] == 0:
                     del hashmap[s[left]]
                 left += 1
-
             ans += left
         return ans
 # @lc code=end
