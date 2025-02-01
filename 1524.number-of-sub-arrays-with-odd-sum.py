@@ -6,7 +6,7 @@
 
 # @lc code=start
 class Solution:
-    def numOfSubarrays(self, arr: List[int]) -> int:
+    def numOfSubarrays(self, arr: list[int]) -> int:
         ans = 0
         even = 1 #(sum zero before array start)
         odd = 0
