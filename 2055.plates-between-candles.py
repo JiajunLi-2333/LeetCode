@@ -20,7 +20,6 @@ class Solution:
 
         for i in range(1, n):
             lcandle[i] = i if s[i] == '|' else lcandle[i - 1]
-
         for i in range(n - 2, -1, -1):
             rcandle[i] = i if s[i] == '|' else rcandle[i + 1]
 
