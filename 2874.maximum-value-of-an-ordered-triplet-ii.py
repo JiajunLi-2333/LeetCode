@@ -11,6 +11,7 @@ class Solution:
         ans = max_diff = pre_max = 0
         for num in nums:
             ans = max(ans, num * max_diff)
+            # These are the variables that need to be maintained on the left while iterate the right.
             max_diff = max(max_diff, pre_max - num)
             pre_max = max(pre_max, num)
         return 0 if ans < 0 else ans
