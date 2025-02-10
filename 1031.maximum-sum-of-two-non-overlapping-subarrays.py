@@ -18,6 +18,7 @@ class Solution:
                 preMax = max(preMax, preSum[i - R] - preSum[i - L - R])
                 ans = max(ans, preMax + preSum[i] - preSum[i - R])
             return ans
+        
         return max(maximum(firstLen, secondLen), maximum(secondLen, firstLen))
 # @lc code=end
 
