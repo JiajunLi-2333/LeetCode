@@ -5,14 +5,13 @@
 #
 
 # @lc code=start
-from collections import Counter
+from collections import defaultdict
 class Solution:
     def numIdenticalPairs(self, nums: list[int]) -> int:
         ans = 0
-        hashmap = Counter()
+        hashmap = defaultdict(int)
         for num in nums:
-            if num in hashmap:
-                ans += hashmap[num]
+            ans += hashmap[num]
             hashmap[num] += 1
         return ans        
 # @lc code=end
