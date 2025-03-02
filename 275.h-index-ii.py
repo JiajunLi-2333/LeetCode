@@ -40,15 +40,15 @@ class Solution:
     
         #left and left - 1 always meet the condition
         #right and right + 1 always not meet the condition
-        # left = 0
-        # right = len(citations) + 1
-        # while left + 1 < right:
-        #     mid = (left + right) // 2
-        #     if citations[-mid] >= mid:
-        #         left = mid
-        #     else:
-        #         right = mid
-        # return left #or return right - 1
+        left = 0
+        right = len(citations) + 1
+        while left + 1 < right:
+            mid = (left + right) // 2
+            if citations[-mid] >= mid:
+                left = mid
+            else:
+                right = mid
+        return left #or return right - 1
 
         #left -1 always meet the condition regardless of the value of left
         #right and right + 1 always not meet the condition
