@@ -12,6 +12,8 @@ class Solution:
             count = 1
             sum = 0
             for num in nums:
+                if num > maxSum:
+                    return False
                 if sum + num > maxSum:
                     if count == k:
                         return False
@@ -21,7 +23,7 @@ class Solution:
                     sum += num
             return True
         right = sum(nums) 
-        left = max(nums) - 1
+        left = min(nums) -1
         while left + 1 < right:
             mid = (left + right) //2
             if check(mid):
