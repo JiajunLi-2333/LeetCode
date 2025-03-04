@@ -18,7 +18,7 @@ class Solution:
         # left = 0
         # right = len(citations)
         # while left < right:
-        #     mid = (left + right + 1) // 2
+        #     mid = (left + right + 1) // 2ø
         #     if citations[-mid] >= mid:
         #         left = mid
         #     else:
