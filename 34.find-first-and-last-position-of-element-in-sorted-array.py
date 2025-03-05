@@ -47,7 +47,18 @@ class Solution:
                 else:
                     right = mid
             return right # or return left + 1
-        return [-1,-1] if target not in nums else [find_first_one(nums, target), find_first_one(nums, target + 1) -1]
+        def find_first_four(nums: list[int], target: int)-> int:
+            left = -1
+            right = len(nums) - 1
+            while left < right:
+                #Rounding up 
+                mid = (left + right + 1) // 2
+                if nums[mid] < target:
+                    left = mid
+                else:
+                    right = mid - 1
+            return right  + 1
+        return [-1,-1] if target not in nums else [find_first_four(nums, target), find_first_four(nums, target + 1) -1]
         #! Below is the solution using the written module bisect, not really recommend to use it in interview
         # return [-1,-1] if target not in nums else [bisect.bisect_left(nums, target), bisect.bisect_right(nums, target) -1]
 # @lc code=end
