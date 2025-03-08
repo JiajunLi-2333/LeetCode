@@ -53,22 +53,40 @@ class Solution:
         #todo Best solution here
 
         #! This is the optimized solution to find the minimum swaps which achieves the O(n) time complexity and This method fully uses the binary attributes of the array
-        num_ones = sum(nums)
-        ans = len(nums)
-        if num_ones == 0 or num_ones == 1:
-            return 0
-        right = 0
-        #window one's count
-        one_count = nums[0]
-        for left in range(len(nums)):
+        # num_ones = sum(nums)
+        # ans = len(nums)
+        # if num_ones == 0 or num_ones == 1:
+        #     return 0
+        # right = 0
+        # #window one's count
+        # one_count = nums[0]
+        # for left in range(len(nums)):
 
-            if left != 0:
-                one_count -= nums[left - 1]
-            while right - left + 1 < num_ones:
+        #     if left != 0:
+        #         one_count -= nums[left - 1]
+        #     while right - left + 1 < num_ones:
+        #         right += 1
+        #         one_count += nums[right % len(nums)]
+        #     ans = min(ans, num_ones - one_count)
+        # return ans
+
+        window_length = sum(nums)
+        ans = n = len(nums)
+        right = 0
+        cur_ones = nums[0]
+        for i in range(len(nums)):
+            if i != 0:
+                cur_ones -= nums[i -1]
+            while right - i + 1 < window_length:
                 right += 1
-                one_count += nums[right % len(nums)]
-            ans = min(ans, num_ones - one_count)
-        return ans
+                cur_ones += nums[right % n]
+            ans = min(ans, window_length - cur_ones)
+        return
+
+
+
+
+
                 
 # @lc code=end
 

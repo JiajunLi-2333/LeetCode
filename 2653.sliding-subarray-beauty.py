@@ -41,23 +41,43 @@ class Solution:
         # return ans
 
         #! This is the most efficient soluton 91.53% faster than all users, using the sorted list method
-        neg_list = SortedList()
+        # neg_list = SortedList()
+        # ans = []
+        # neg_count = 0
+        # for i in range(len(nums)):
+        #     if nums[i] < 0:
+        #         neg_list.add(nums[i])
+        #         neg_count += 1
+        #     if i < k - 1:
+        #         continue
+        #     if neg_count >= x:
+        #         ans.append(neg_list[x - 1])
+        #     else: 
+        #         ans.append(0)
+        #     #Exit the window
+        #     if nums[i - k + 1] < 0:
+        #         neg_list.remove(nums[i - k + 1])
+        #         neg_count -= 1
+        # return ans
+
         ans = []
-        neg_count = 0
+        freq = [0] * 50
         for i in range(len(nums)):
             if nums[i] < 0:
-                neg_list.add(nums[i])
-                neg_count += 1
-            if i < k - 1:
+                freq[50 + nums[i]] += 1
+            if i < k -1:
                 continue
-            if neg_count >= x:
-                ans.append(neg_list[x - 1])
-            else: 
+
+            cnt = 0
+            for j in range(50):
+                cnt += freq[j]
+                if cnt >= x:
+                    ans.append(j - 50)
+                    break
+            if cnt < x:
                 ans.append(0)
-            #Exit the window
             if nums[i - k + 1] < 0:
-                neg_list.remove(nums[i - k + 1])
-                neg_count -= 1
+                freq[50 + nums[i - k + 1]] -= 1
         return ans
 # @lc code=end
 

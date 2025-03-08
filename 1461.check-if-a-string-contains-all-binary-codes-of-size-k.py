@@ -4,6 +4,7 @@
 # [1461] Check If a String Contains All Binary Codes of Size K
 #
 # @lc code=start
+from collections import Counter
 class Solution:
     def hasAllCodes(self, s: str, k: int) -> bool:
         #! This is the slicing window solution
@@ -28,21 +29,33 @@ class Solution:
         #! Bit operation:
         #! & - bitwise AND For each bit position, the result is 1 if both bits are 1, otherwise, the result is 0.
         #! | - bitwise OR For each bit position, the result is 1 if at least one of the bits is 1, otherwise, the result is 0.
-        need = 1 << k
-        got = [False]*need
-        all_one = need - 1
-        hash_val = 0
+        # need = 1 << k
+        # got = [False]*need
+        # all_one = need - 1
+        # hash_val = 0
 
-        for i in range(len(s)):
-            # calculate hash for s[i-k+1:i+1]
-            hash_val = ((hash_val << 1) & all_one) | (int(s[i]))
-            # hash only available when i-k+1 > 0
-            if i >= k-1 and got[hash_val] is False:
-                got[hash_val] = True
-                need -= 1
-                if need == 0:
-                    return True
-        return False
+        # for i in range(len(s)):
+        #     # calculate hash for s[i-k+1:i+1]
+        #     hash_val = ((hash_val << 1) & all_one) | (int(s[i]))
+        #     # hash only available when i-k+1 > 0
+        #     if i >= k-1 and got[hash_val] is False:
+        #         got[hash_val] = True
+        #         need -= 1
+        #         if need == 0:
+        #             return True
+        # return False
+
+
+        cur = []
+        hashmap = Counter()
+        for i,c in enumerate(s):
+            cur.append(c)
+            if i < k - 1:
+                continue
+            hashmap["".join(cur)] += 1
+            cur.pop(0)
+        return len(hashmap) == 2**k
+
     
     #This much faster in this case
 # @lc code=end
