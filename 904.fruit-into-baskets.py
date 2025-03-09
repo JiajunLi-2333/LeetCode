@@ -28,18 +28,28 @@ class Solution:
         #     ans.append(count)
         # return max(ans)
         #todo This is a more efficient way of solving this
-        count, i = {}, 0
-        for j, v in enumerate(fruits):
-            #This because we are using a dictionary but not a counter object, the get method is used to get the value of the key, if the key is not present, it returns 0
-            count[v] = count.get(v, 0) + 1
-            if len(count) > 2:
-                count[fruits[i]] -= 1
-                if count[fruits[i]] == 0: del count[fruits[i]]
-                i += 1
-        return j - i + 1
-            
-            
+        # count, i = {}, 0
+        # for j, v in enumerate(fruits):
+        #     #This because we are using a dictionary but not a counter object, the get method is used to get the value of the key, if the key is not present, it returns 0
+        #     count[v] = count.get(v, 0) + 1
+        #     if len(count) > 2:
+        #         count[fruits[i]] -= 1
+        #         if count[fruits[i]] == 0: del count[fruits[i]]
+        #         i += 1
+        # return j - i + 1
 
+        hashmap = Counter()
+        left = 0
+        ans = -1
+        for i, c in enumerate(fruits):
+            hashmap[c] += 1
+            while len(hashmap) > 2:
+                hashmap[fruits[left]] -= 1
+                if hashmap[fruits[left]] == 0:
+                    del hashmap[fruits[left]]
+                left += 1
+            ans = max(ans, i - left + 1)
+        return ans
         
 # @lc code=end
 

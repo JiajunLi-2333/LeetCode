@@ -16,13 +16,27 @@ class Solution:
         # return max(hashmap.values()) 
 
         #Optimized solution   
-         sorted_nums = sorted(nums)
-         left = 0
-         length = 0
-         for i in range(len(nums)):
-            if sorted_nums[i] - sorted_nums[left] > 2 * k:
+        #  sorted_nums = sorted(nums)
+        #  left = 0
+        #  length = 0
+        #  for i in range(len(nums)):
+        #     if sorted_nums[i] - sorted_nums[left] > 2 * k:
+        #         left += 1
+        #     length = max(length, i - left + 1)
+        #  return length      
+        # 
+        # 
+        
+        #! sort the array to get consecutive property
+        nums.sort()
+        n = len(nums) 
+        ans = 0
+        left = 0
+        for i in range(n):
+            if nums[i] - nums[left] > 2 * k:
                 left += 1
-            length = max(length, i - left + 1)
-         return length            
+            ans = max(ans, i - left + 1)
+        return ans
+              
 # @lc code=end
 
