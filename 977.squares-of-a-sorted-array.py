@@ -16,7 +16,20 @@ class Solution:
         #     res.append(num * num)
         # return sorted(res)
 
-        
+        left, right = 0, len(nums) - 1
+        ans = [0] * len(nums)
+        n = len(nums)
+        for i in range(n -1, -1, -1):
+            x, y = nums[left], nums[right]
+            if -x < y:
+                ans[i] = y * y
+                right -= 1
+            else:
+                ans[i] = x * x
+                left += 1
+        return ans
+
+
         
 # @lc code=end
 
