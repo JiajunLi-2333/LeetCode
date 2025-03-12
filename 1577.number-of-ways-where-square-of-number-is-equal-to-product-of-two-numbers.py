@@ -11,10 +11,9 @@ class Solution:
         #No Unique requirement
         #i
 
+
+        #? Hardest thing in this problem is to find out how to count the duplicated pairs in the array and how to jump on them
         #two pointer helper function
-
-
-
         def count_triplet(n1: List[int], n2: List[int]) -> int:
             count = 0
              #! the first approach works, but TLE for many duplicated pairs
