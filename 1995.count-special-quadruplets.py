@@ -23,18 +23,21 @@ class Solution:
         #todo Below is the optimized solution
         #From the question, we can know that num[a] + num[b] = num[d] - num[c]
         #So we can use a dict to store the value of num[d] - num[c]
-        ans = 0
-        n = len(nums)
-        hashmap = Counter()
-        # Move c from right to left (starting at n-2 so c+1 is valid).
-        for c in range(n - 2, 0, -1):
-            for a in range(c):
-                ans += hashmap[nums[a] + nums[c]]
-            for d in range(c + 1, n):
-                hashmap[nums[d] - nums[c]] += 1
+        # ans = 0
+        # n = len(nums)
+        # hashmap = Counter()
+        # # Move c from right to left (starting at n-2 so c+1 is valid).
+        # for c in range(n - 2, 0, -1):
+        #     for a in range(c):
+        #         ans += hashmap[nums[a] + nums[c]]
+        #     for d in range(c + 1, n):
+        #         hashmap[nums[d] - nums[c]] += 1
         
-        return ans
+        # return ans
 
+
+        #nums[a] + nums[b] = nums[d] - nums[c]
+        
         
 # @lc code=end
 
