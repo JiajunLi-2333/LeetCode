@@ -9,7 +9,7 @@ from typing import List
 from itertools import accumulate
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        difference_array = [0] * 1001
+        difference_array = [0] * 1002
         for trip in trips:
             passenger = trip[0]
             from_ = trip[1]
