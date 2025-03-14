@@ -21,6 +21,7 @@ class Solution:
         # return True
     
         #Done by difference array:
+        #The range is from 0 to 50 -> length = 51, need 52 to prevent out of boundary
         diff = [0] * 52
         for l, r in ranges:
             diff[l] += 1
