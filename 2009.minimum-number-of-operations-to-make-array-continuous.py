@@ -13,6 +13,8 @@ class Solution:
         # the diff between max and min in nums == len(nums) - 1 
 
         #constraints 1 <= nums[i] <= 10 ** 9 
+
+        #The key is to find the maximum number of elements that we can keep in the array
         a = sorted(set(nums))
         ans = -1
         left = 0
@@ -21,10 +23,6 @@ class Solution:
                 left += 1
             ans = max(ans, i - left + 1)
         #how many elements we need to change
-        return len(nums) - ans
-
-
-
-        
+        return len(nums) - ans    
 # @lc code=end
 
