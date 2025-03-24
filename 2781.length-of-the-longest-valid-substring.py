@@ -19,7 +19,7 @@ class Solution:
                 if word[i: right + 1] in forbidden:
                     left = i + 1
                     break
-            ans = max(ans, right - left + 1)
+            ans = max(ans, right - left + 1)68
         return ans
         
 # @lc code=end
