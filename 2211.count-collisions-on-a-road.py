@@ -10,26 +10,70 @@ class Solution:
 
         #use a stack to store the cars
 
+        #Figure out the conditions of collisions is the key to the solution
+
+        # RRRRLL
+        # RRRSSL -> RRSSSL -> RSSSSL -> SSSSSL -> SSSSSS
+        # 2 + 1 + 1 + 1 + 1 = 6 collisions
+
         #condition of collision:
         stack, ans = [], 0
         for d in directions:
-            if stack and stack[-1] == 'R':
-                if d == 'L':
-                    stack.append('S')
-                    ans += 2
-                elif d == 'S':
-                    stack.append('S')
-                    ans += 1
-            elif stack and stack[-1] == 'S':
-                if d == 'L':
-                    #change the last car to 'S'
-                    stack.append('S')
-                    ans += 1
-                else:
-                    stack.append(d)
-            else:
+            if not stack:
                 stack.append(d)
+            elif d == 'R':
+                stack.append(d)
+            elif d == 'S':
+                while stack and stack[-1] == 'R':
+                    stack.pop() 
+                    ans += 1
+                stack.append(d)
+            #when d == 'L' 
+            else:
+                #the first L in the stack does not collide with any R or S
+                if not stack:
+                    continue
+                elif stack[-1] == 'S':
+                    ans += 1
+                elif stack[-1] == 'R':
+                    ans += 2
+                    stack.pop()
+                    while stack and stack[-1] == 'R':
+                        stack.pop()
+                        ans += 1
+                    stack.append('S')
         return ans
+        # stack = []
+        # ans = 0
+        
+        # for n in directions:
+        #     if not stack:
+        #         stack.append(n)
+
+        #     elif n == 'S':
+        #         while stack and stack[-1] == 'R':
+        #             ans += 1
+        #             stack.pop()
+        #         stack.append(n)
+                
+   
+        #     elif n == 'R':
+        #         stack.append(n)
+                
+       
+        #     else:
+        #         if not stack:
+        #             continue
+        #         elif stack[-1] == 'S':
+        #             ans += 1 
+        #         elif stack[-1] == 'R':
+        #             ans += 2
+        #             stack.pop()
+        #             while stack and stack[-1] == 'R':
+        #                 ans += 1
+        #                 stack.pop()
+        #             stack.append('S')
+        # return ans
 
 
 # @lc code=end
