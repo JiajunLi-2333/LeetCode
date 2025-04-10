@@ -21,5 +21,6 @@ class Solution:
             prev = cur
             cur = next_node
         return prev
+            
 # @lc code=end
 
