@@ -7,6 +7,6 @@
 # @lc code=start
 class Solution:
     def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
-        
+        #! waiting for the solution
 # @lc code=end
 
