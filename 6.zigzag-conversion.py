@@ -7,6 +7,7 @@
 # @lc code=start
 class Solution:
     def convert(self, s: str, numRows: int) -> str:
+        print("Test for Linux machine")
         print(s)
 # @lc code=end
 
