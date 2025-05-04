@@ -29,6 +29,7 @@ class Solution:
             hashmap[nums[i]] = i
         
         #test for the linux
+        #test from the mac machine
         return None 
 # @lc code=end
 
