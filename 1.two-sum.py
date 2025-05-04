@@ -27,6 +27,8 @@ class Solution:
             if target - nums[i] in hashmap:
                 return [hashmap[target - nums[i]], i]
             hashmap[nums[i]] = i
+        
+        #test for the linux
         return None 
 # @lc code=end
 
