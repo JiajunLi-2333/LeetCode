@@ -8,6 +8,7 @@
 class Solution {
     public double findMaxAverage(int[] nums, int k) {;
         double sum = 0;
+        //int max = Double.MIN_VALUE will raise an error because it casts a wider primitive type to a narrower one
         double max = Integer.MIN_VALUE;
         for(int i = 0; i < nums.length; i++){
             sum += nums[i];
