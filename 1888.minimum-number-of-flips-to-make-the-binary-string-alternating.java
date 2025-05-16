@@ -7,20 +7,33 @@
 // @lc code=start
 class Solution {
     public int minFlips(String s) {
-        int n = s.length();
-        s += s; // Concatenate the string to simulate the TYPE 1 operation
-        int res = Integer.MAX_VALUE;
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < s.length(); i++){
-            //! substring takes too much time, optimize by sliding window
-            // int cnt_one = numFlips(s.substring(i, i + n), target_one);
-            // int cnt_zero = numFlips(s.substring(i, i + n), target_zero);
-            // res = Math.min(res, Math.min(cnt_one, cnt_zero));
+        String s2 = s + s;
+        int One_pattern = 0;
+        int Zero_pattern = 0;
+        int ans = Integer.MAX_VALUE;
+        for(int i = 0; i < s2.length(); i++){
+            if(i % 2 == 0){// Even position
+                if (s2.charAt(i) == '0') One_pattern++;
+                else Zero_pattern++;
+            }
+            else{
+                if(s2.charAt(i) == '0') Zero_pattern++;
+                else One_pattern++;
+            }
 
-            //todo sliding window
-
+            if(i < s.length() -1) continue;
+            ans = Math.min(ans, Math.min(One_pattern, Zero_pattern));
+            int j = i - s.length() + 1;
+            if(j % 2 == 0){
+                if (s2.charAt(i - s.length() + 1) == '0') One_pattern--;
+                else Zero_pattern--;
+            }
+            else{
+                if(s2.charAt(i - s.length() + 1) == '0') Zero_pattern--;
+                else One_pattern--;
+            }
         }
-        return res;
+        return ans; 
     }
 }
 // @lc code=end
