@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=203 lang=java
+ * @lc app=leetcode id=3217 lang=java
  *
- * [203] Remove Linked List Elements
+ * [3217] Delete Nodes From Linked List Present in Array
  */
 
 // @lc code=start
@@ -15,23 +15,28 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+import java.util.HashSet;
 class Solution {
-    public ListNode removeElements(ListNode head, int val) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
+    public ListNode modifiedList(int[] nums, ListNode head) {
+        HashSet<Integer> set = new HashSet<>();
+        for(int num : nums){
+            set.add(num); 
+        }
+        ListNode dummy = new ListNode();
+        dummy.next = head; 
         ListNode cur = head;
         ListNode prev = dummy;
         while(cur != null){
-            if(cur.val == val){
+            if(set.contains(cur.val)){
                 prev.next = cur.next;
-            }
-            else{
+            }else{
                 prev = cur;
             }
             cur = cur.next;
+
         }
         return dummy.next;
-        
+
     }
 }
 // @lc code=end
