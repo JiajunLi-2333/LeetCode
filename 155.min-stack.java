@@ -6,7 +6,8 @@
 import java.util.Stack;
 // @lc code=start
 class MinStack {
-    private Stack<int[]> stack = new Stack<>();
+    //the Key concept here is prefix
+    private final Stack<int[]> stack = new Stack<>();
     public MinStack() {
         
     }
