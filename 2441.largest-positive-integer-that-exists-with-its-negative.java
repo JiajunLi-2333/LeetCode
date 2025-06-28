@@ -24,15 +24,17 @@ class Solution {
         // return max;
 
         //todo An optimized method
+        // Set<Integer> set = new HashSet<>();
+        // int ans = -1;
+        // for(int num: nums){
+        //     if (set.contains(-num)){
+        //         ans = Math.max(ans, Math.abs(num));
+        //     }
+        //     set.add(num);
+        // }
+        // return ans;
         Set<Integer> set = new HashSet<>();
-        int ans = -1;
-        for(int num: nums){
-            if (set.contains(-num)){
-                ans = Math.max(ans, Math.abs(num));
-            }
-            set.add(num);
-        }
-        return ans;
+        int ans =1
     }
 }
 // @lc code=end
