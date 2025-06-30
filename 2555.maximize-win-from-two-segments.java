@@ -8,7 +8,7 @@
 class Solution {
     public int maximizeWin(int[] prizePositions, int k) {
         int ans = 0, n = prizePositions.length, left = 0;
-        int[] mx = new int[n + 1 ];
+        int mx = 0;
         if (2 * k + 1 >= prizePositions[n - 1] - prizePositions[0]) {
             return n;
         }
@@ -16,7 +16,7 @@ class Solution {
             while(prizePositions[right] - prizePositions[left] > k){
                 left++;
             }
-            ans = Math.max(ans, mx[left] + right - left + 1);
+            ans = Math.max(ans, mx + right - left + 1);
             mx[right + 1] = Math.max(mx[right], right - left + 1);
         }
         return ans; 
