@@ -12,6 +12,8 @@ class Solution {
         //nums[a] * nums[c] == nums[b] * nums[d]
         // a < b < c < d
         //Equivalent to:
+        //! 把乱序关系变成顺位继承关系就可以用伏笔的方式解决问题
+            
         //nums[a] / nums[b] == nums[d] / nums[c]
         long ans = 0;
         Map<Float, Integer> map = new HashMap<>();
