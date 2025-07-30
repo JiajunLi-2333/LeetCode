@@ -893,7 +893,7 @@ PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> {
         Arrays.sort(indexedTasks, (a, b) -> a[0] - b[0]);
 ```
 
-最后，对于每一次遍历，假设当前的时间是time，需要把enqueue time < time的所有任务都放到堆中，把当前CPU处理的任务的id放到答案并且更新time代表CPU可以执行下一次人物的时间。
+最后，对于每一次遍历，假设当前的时间是time，需要把enqueue time < time的所有任务都放到堆中，把当前CPU处理的任务的id放到答案并且更新time代表CPU可以执行下一次任务的时间。
 
 ```java
     while(i < n){
