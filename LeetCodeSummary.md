@@ -968,4 +968,208 @@ class Solution {
     }
 }
 ```
+### 1792.最大平均通过率
+
+题目简述： 有一个2D数组classes, classes[i] = {pass, total} total代表着班上所有学生的人数， pass代表班上能通过考试的学生人数。 现在有一个整数extraStudents代表这可以通过考试的学生数量。把每一个extraStudents都分配到班上去， 求怎么分配能让所有班级的平均通过率最大。
+
+题目限制：
+
+- `1 <= classes.length <= 105`
+- `classes[i].length == 2`
+- `1 <= passi <= totali <= 105`
+- `1 <= extraStudents <= 105`
+
+首先不管最大的通过率，这个通过率是怎么计算的呢？
+设x y z  分别为三个班级的平均通过率，那么所有班级的平均通过率就是
+$$
+\frac{x + y + z}{3} = a
+$$
+
+$$
+\frac{x}{3} + \frac{y}{3} + \frac{z}{3} = a
+$$
+
+那么现在要让a最大化， 显然就是要知道x y z哪个加一带来的增幅最大。 换成数学公式就是
+
+设 x = a/b，再加上一个学生之后， x' = (a + 1) / (b +1), x’ - x最大的那个班级就应该是extraStudents应该去的那个班级。
+
+这个问题就变成了要维护每次分配学生之后，平均通过率最大的那个班级。由于每次我们都是要的最大值，可以用一个最大堆来进行动态维护。  
+
+```java
+/*
+ * @lc app=leetcode id=1792 lang=java
+ *
+ * [1792] Maximum Average Pass Ratio
+ */
+import java.util.PriorityQueue;
+// @lc code=start
+class Solution {
+    /**
+     * @param classes
+     * @param extraStudents
+     * @return
+     */
+    public double maxAverageRatio(int[][] classes, int extraStudents) {
+        // The key is about the maximum increase in average pass ratio by adding one student to the class
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
+            double diffA = increaseAmount(a);
+            double diffB = increaseAmount(b);
+            return Double.compare(diffB, diffA);
+        });
+        for(int[] cls : classes){
+            pq.offer(cls);
+        }
+        while(extraStudents-- > 0){
+            int[] cls = pq.poll();
+            cls[0]++; 
+            cls[1]++; 
+            pq.offer(cls); 
+        }
+        double ans = 0;
+        while(!pq.isEmpty()){
+            int[] cls = pq.poll();
+            ans += (double) cls[0] / cls[1]; 
+        }
+        return ans / classes.length; 
+    }
+    private double increaseAmount(int[] cls){
+        int x = cls[0];
+        int y = cls[1];
+        return (double) (x + 1) / (y + 1) - (double) x / y;
+    }
+}
+```
+
+### 2931. 购买物品的最大开销
+
+题目观察：
+
+首先这个开销的算法非常的直接， 就是 price * d. 其中要注意的是d是单调递增的。 公式可以这样表达
+$$
+\text{sum} \;=\; a_{1}\cdot 1 \;+\; a_{2}\cdot 2 \;+\; a_{3}\cdot 3 \;+\; \cdots \;+\; a_{d}\cdot d
+$$
+那么自然就有一个问题是我怎么选择才能使sum最大？
+
+如果说我每次都拿rightmost最大的数， 那么很有可能会先消耗掉一行再接着拿，这样会导致大的数目过早的跟数值较小的d相乘导致并不能最大化。所以应该先把最小的那个数拿了，让较大的值和较大的d相乘才能最大化sum
+
+
+
+**即，当两个序列同向排序时，点乘和最大**
+
+非严格证明：
+
+## 交换法（Swap Argument）证明
+
+我们要最大化加权和
+$$
+S \;=\;\sum_{i=1}^d a_i \, i,
+$$
+其中权重序列 \(1,2,\dots,d\) 是严格递增的。
+
+### 1. 假设存在逆序对  
+
+假设在某个最优排列中，存在一对下标 \(p<q\)，却有  
+$$
+a_p > a_q
+$$
+
+则称 \((p,q)\) 为“逆序对”。
+
+### 2. 交换前后的局部和  
+
+- **交换前**（原排列中）：
+  $$
+  S_{\text{old}}
+  = a_p \cdot p \;+\; a_q \cdot q.
+  $$
+
+- **交换后**（将 \(a_p\) 与 \(a_q\) 互换位置）：
+  $$
+  S_{\text{new}}
+  = a_q \cdot p \;+\; a_p \cdot q.
+  $$
+
+### 3. 增量计算  
+
+$$
+\Delta \;=\; S_{\text{new}} - S_{\text{old}}
+\;=\;(a_q\,p + a_p\,q)\;-\;(a_p\,p + a_q\,q)
+\;=\;(a_p - a_q)\,(q - p)
+\;>\;0.
+$$
+
+
+也就是说，这次交换**必定**使总和严格增大。
+
+### 4. 消除所有逆序对  
+
+对任意逆序对重复上述交换操作，每次都能提升 \(S\)。  
+有限次交换后，必能消灭所有逆序对，剩下的排列满足
+$$
+a_1 \le a_2 \le \cdots \le a_d.
+$$
+所以，每一次取能取到的最小值，就能保证最后的sum是最大的。
+
+那么用暴力的做法，我们可以每次都遍历每一行rightmost中的最小值然后把它从values[i] 中拿走， 但是这样的时间复杂度就太高了。
+
+*优化：*
+
+可以观察到我们要关注的就是rightmost最小值， 因为每一行本身就是从大到小排列的，所以我们每次取得就是m * n个数中的最小值。所以我们可以直接用一个priority queue把所有值进行排序然后每次都pop 最小的值
+
+```java
+import java.util.PriorityQueue;
+// @lc code=start
+class Solution {
+    public long maxSpending(int[][] values) {
+        // PriorityQueue<Integer> pq = new PriorityQueue<>();
+        // for(int[] value: values){
+        //     for(int v: value){
+        //         pq.offer(v);
+        //     }
+        // }
+        // long days = values.length * values[0].length;
+        // long ans = 0;
+        // for(long i = 0; i < days; i++){
+        //     ans += pq.poll() * (i + 1);
+        // }
+        // return ans;
+
+        //! This ensures the logic of always taking the rightmost element but it is unnecessary because the arrays are sorted already in descending order.
+        int m = values.length;
+        int n = values[0].length;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> values[a[0]][a[1]] - values[b[0]][b[1]]);
+        for (int i = 0; i < m; i++) {
+            pq.offer(new int[]{i, n - 1});
+        }
+
+        long ans = 0;
+        for (int d = 1; d <= m * n; d++) {
+            int[] p = pq.poll();
+            int i = p[0];
+            int j = p[1];
+            ans += (long) values[i][j] * d;
+            if (j > 0) {
+                pq.offer(new int[]{i, j - 1});
+            }
+        }
+        return ans;
+        
+        //Alternative Method by using just a num array 
+        int[] allValues = new int[values.length * values[0].length];
+        int index = 0;
+        for (int[] row : values) {
+            for (int v : row) {
+                allValues[index++] = v;
+            }
+        }
+        Arrays.sort(allValues);
+        long ans = 0;
+        for (int d = 1; d <= allValues.length; d++) {
+            ans += (long) allValues[d - 1] * d;
+        }
+        return ans;
+    }
+}
+```
+
 
