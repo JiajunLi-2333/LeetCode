@@ -9,7 +9,7 @@ class Solution {
     public int maxSumTwoNoOverlap(int[] nums, int firstLen, int secondLen) {
         //! I managed to crack out the logic of using iterate the right pointer and maintain the left to reduce the number of changing variables but I failed to think of using the prefix sum to reduce the time complexity.
         int n = nums.length;
-        int prefixSum[] =  new int[n + 1];
+        int prefixSum[] =  new int[n + 1]; //前缀和求和小技巧
         for(int i = 0; i < n; i++){
             prefixSum[i + 1] = prefixSum[i] + nums[i];
         }
