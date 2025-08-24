@@ -29,7 +29,7 @@ class Solution {
         //     }
         // }
         // return ans;
-        map.put(nums[0] / (float) nums[1], 1); // Initialize map with the first pair
+        map.put( nums[0] / (float) nums[1], 1); // Initialize map with the first pair
         for(int c = 2; c < nums.length -1; c++){
             for(int d = c + 1; d < nums.length; d++){
                 // Check if the ratio exists in the map
