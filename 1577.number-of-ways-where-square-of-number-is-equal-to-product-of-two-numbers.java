@@ -8,7 +8,9 @@ import java.util.*;
 class Solution {
     public int numTriplets(int[] nums1, int[] nums2) {
         // return getCnt(nums1, nums2) + getCnt(nums2, nums1);
-        
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        return getCnt(nums1, nums2) + getCnt(nums2, nums1);
         
     }
     // private int getCnt(int[] nums1, int[] nums2) {
@@ -26,6 +28,42 @@ class Solution {
     //     }
     //     return cnt;
     // }
+    private int getCnt(int[] nums1, int[] nums2){
+        int cnt = 0;
+        for(int i = 0; i < nums1.length;i++){
+            long square = (long) nums1[i] * nums1[i];
+            int left = 0, right = nums2.length -1;
+            while(left < right){
+                long product = (long) nums2[left] * nums2[right];
+                if(product > square){
+                    right--;
+                } else if(product < square){
+                    left++;
+                } else {
+                    if(nums2[left] == nums2[right]){
+                        int size = right - left + 1;
+                        cnt += size * (size - 1) / 2;
+                        break;
+                    }
+                    else{
+                        int leftCnt = 1, rightCnt = 1;
+                        while(left + 1 < right && nums2[left] == nums2[left + 1]){
+                            leftCnt++;
+                            left++;
+                        }
+                        while(right - 1 > left && nums2[right] == nums2[right - 1]){
+                            rightCnt++;
+                            right--;
+                        }
+                        cnt += leftCnt * rightCnt;
+                        left++;
+                        right--;
+                    }
+                }
+            }
+        }
+        return cnt;
+    }
     
 }
 // @lc code=end
