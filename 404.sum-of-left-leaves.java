@@ -21,9 +21,23 @@
  * }
  */
 class Solution {
+    private int ans = 0;
     public int sumOfLeftLeaves(TreeNode root) {
+        dfs(root);
+        return ans;
+    }
+    private void dfs(TreeNode root){
+        if(root == null) return; 
+        if(root.left != null && root.left.left == null && root.left.right == null) {
+            ans += root.left.val;
+        }
+        dfs(root.left);
+        dfs(root.right);
         
     }
 }
+
+// @lc code=end
+
 // @lc code=end
 
