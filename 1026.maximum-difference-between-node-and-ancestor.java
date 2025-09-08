@@ -21,8 +21,18 @@
  * }
  */
 class Solution {
+    private int maxDiff = Integer.MIN_VALUE;
     public int maxAncestorDiff(TreeNode root) {
-        
+        dfs(root, root.val, root.val);
+        return maxDiff;
+    }
+    private void dfs(TreeNode node, int curMax, int curMin){
+        if(node == null) return;
+        curMax = Math.max(curMax, node.val);
+        curMin = Math.min(curMin, node.val);
+        maxDiff = Math.max(maxDiff, curMax - curMin);
+        dfs(node.left, curMax, curMin);
+        dfs(node.right, curMax, curMin);
     }
 }
 // @lc code=end
