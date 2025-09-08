@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=671 lang=java
+ * @lc app=leetcode id=111 lang=java
  *
- * [671] Second Minimum Node In a Binary Tree
+ * [111] Minimum Depth of Binary Tree
  */
 
 // @lc code=start
@@ -21,19 +21,21 @@
  * }
  */
 class Solution {
-    int ans = -1;
-    public int findSecondMinimumValue(TreeNode root) {
-        dfs(root, root.val);
-        return ans;
+    private int ans = Integer.MAX_VALUE;
+    public int minDepth(TreeNode root) {
+        minNode(root, 0);
+        return ans == Integer.MAX_VALUE ? 0 : ans;
     }
-    private void dfs(TreeNode root, int cur){
+    private void minNode(TreeNode root, int cnt){
         if(root == null) return;
-        if(root.val != cur){
-            if(ans == -1) ans = root.val;
-            else ans = Math.min(ans, root.val);
+        cnt++;
+        if(root.left == null && root.right == null) {
+            ans = Math.min(ans, cnt);
+            return;
         }
-        dfs(root.left, cur);
-        dfs(root.right, cur);
+        minNode(root.left, cnt);
+        minNode(root.right, cnt);
+
     }
 }
 // @lc code=end
