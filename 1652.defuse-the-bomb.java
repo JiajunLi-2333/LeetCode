@@ -41,23 +41,52 @@ class Solution {
         // return result;
 
         // Better solution
+        // int n = code.length;
+        // int[] result = new int[n];
+        // if (k == 0) {
+        //     return result;
+        // }
+        // int right_start = k > 0 ? k + 1 : n; // confirm the right start index of the sliding window
+        // k = Math.abs(k);
+        // int sum = 0;
+        // for(int i = right_start - k; i < right_start; i++){
+        //     sum += code[i];
+        // }
+        // for(int i = 0; i < n; i++){
+        //     result[i] = sum;
+        //     sum += code[right_start % n] - code[(right_start - k) % n];
+        //     right_start++;
+        // }
+        // return result;
+
+        //! The answers are formed by continuous subarrays of length k -> Enumeration and sliding window technique.
+        //TODO the sliding window is used to avoid repeated calculation of sum and validdate the status of the window
+        //? the modular arithmetic is used to simulate the circular array
         int n = code.length;
-        int[] result = new int[n];
-        if (k == 0) {
-            return result;
+        int[] ans = new int[n];
+        if(k == 0) return ans;
+        int rightEnd = 0;
+        if(k > 0){
+            rightEnd = k + 1;
         }
-        int right_start = k > 0 ? k + 1 : n; // confirm the right start index of the sliding window
-        k = Math.abs(k);
+        else{
+            rightEnd = n;
+            k = -k;
+        }
+
         int sum = 0;
-        for(int i = right_start - k; i < right_start; i++){
+        for(int i = rightEnd - k; i < rightEnd; i++){
             sum += code[i];
         }
         for(int i = 0; i < n; i++){
-            result[i] = sum;
-            sum += code[right_start % n] - code[(right_start - k) % n];
-            right_start++;
+            ans[i] = sum;
+            sum += code[rightEnd % n];
+            sum -= code[(rightEnd - k) % n];
+            rightEnd++;
         }
-        return result;
+        return ans;
+        
+
 
 
     }

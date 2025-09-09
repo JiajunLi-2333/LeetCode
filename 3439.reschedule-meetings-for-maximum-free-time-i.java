@@ -7,6 +7,7 @@
 // @lc code=start
 class Solution {
     public int maxFreeTime(int eventTime, int k, int[] startTime, int[] endTime) {
+        //! use sliding window to validate every possible k meetings and reduce repeated calculation --> window slide in and out the time gap between meetings
         //Still a sliding window problem
         int result = 0;
         int sum = 0;
@@ -14,7 +15,7 @@ class Solution {
             sum += get(i, eventTime, startTime, endTime);
             if(i >= k){
                 result= Math.max(result, sum);
-                sum -= get(i - k, eventTime, startTime, endTime);
+                sum -= get(i - k, eventTime, startTime, endTime);//! exists the window
             }
         }
         return result;
@@ -27,7 +28,7 @@ class Solution {
             if(n == i){
                 return eventTime - endTime[n - 1];
             }
-            return startTime[i] - endTime[i -1];
+            return startTime[i] - endTime[i -1];//! time gap between the last meeting and the current meeting
         }
 }
 // @lc code=end
