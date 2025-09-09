@@ -3,6 +3,7 @@
  *
  * [2462] Total Cost to Hire K Workers
  */
+<<<<<<< HEAD
 import java.util.Arrays;
 import java.util.PriorityQueue;
 // @lc code=start
@@ -44,6 +45,12 @@ class Solution {
 
 
 
+=======
+
+// @lc code=start
+class Solution {
+    public long totalCost(int[] costs, int k, int candidates) {
+>>>>>>> b833881 (Nothing)
         
     }
 }
