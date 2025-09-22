@@ -27,11 +27,12 @@ class Solution {
         return ans;
     }
     private void dfs(TreeNode root){
-        if(root == null) return; 
-        if(root.left != null && root.left.left == null && root.left.right == null) {
+        if(root == null) return;
+        dfs(root.left);
+        if(root.left != null && root.left.left == null && root.left.right == null){
             ans += root.left.val;
         }
-        dfs(root.left);
+        
         dfs(root.right);
         
     }

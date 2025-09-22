@@ -25,14 +25,19 @@ import java.util.List;
  */
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
+        //算法思想：二叉树遍历 + 递归
         List<Integer> ans = new ArrayList<>();
         postorder(root, ans);
         return ans;
     }
     private void postorder(TreeNode root, List<Integer> ans){
+        //递归终止条件
         if(root == null) return;
+
+        //递归顺序
         postorder(root.left, ans);
         postorder(root.right, ans);
+        //节点处理时间和维护操作
         ans.add(root.val);
     }
 }

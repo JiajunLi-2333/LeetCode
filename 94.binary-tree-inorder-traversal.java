@@ -22,12 +22,15 @@ import java.util.*;
  */
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
+        //通过遍历获得答案
         List<Integer> ans = new ArrayList<>();
         inorder(root, ans);
         return ans;
     }
     private void inorder(TreeNode root, List<Integer> ans){
+        //终止条件
         if(root == null) return;
+        //节点的处理顺序： 把左子树处理完了 再处理节点 再处理右子树
         inorder(root.left, ans);
         ans.add(root.val);
         inorder(root.right, ans);

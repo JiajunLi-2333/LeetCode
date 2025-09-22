@@ -29,11 +29,13 @@ class Solution {
         return leaves1.equals(leaves2);
     }
     private void dfs(TreeNode root, List<Integer> leaves){
+        //递归中止条件
         if(root == null) return;
+
+        //采用前序遍历，如果节点无左右子树，则加入叶子节点列表
         if(root.left == null && root.right == null){
             leaves.add(root.val);
-            return;
-        }
+        } 
         dfs(root.left, leaves);
         dfs(root.right, leaves);
     }

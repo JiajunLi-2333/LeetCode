@@ -22,6 +22,7 @@ import java.util.*;
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
+        //遍历二叉树获得前序遍历结果
         List<Integer> ans = new ArrayList<>();
         helper(root, ans);
         return ans;
