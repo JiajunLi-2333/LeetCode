@@ -17,19 +17,35 @@
  */
 class Solution {
     public ListNode mergeNodes(ListNode head) {
+        // ListNode cur = head.next;
+        // ListNode concate = head;
+        // while(cur.next != null){
+        //     if(cur.val != 0){
+        //         concate.val += cur.val;
+        //     }
+        //     else{
+        //         concate = concate.next;
+        //         concate.val = 0;
+        //     }
+        //     cur = cur.next;
+        // }
+        // concate.next = null;
+        // return head;
+
         ListNode cur = head.next;
-        ListNode concate = head;
+        ListNode scissor = head;
+
         while(cur.next != null){
             if(cur.val != 0){
-                concate.val += cur.val;
-            }
-            else{
-                concate = concate.next;
-                concate.val = 0;
+                scissor.val += cur.val;
+            }else{
+                scissor = scissor.next;
+                scissor.val = 0;
             }
             cur = cur.next;
         }
-        concate.next = null;
+
+        scissor.next = null;
         return head;
     }
 

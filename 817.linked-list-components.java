@@ -3,7 +3,8 @@
  *
  * [817] Linked List Components
  */
-
+import java.util.Arrays;
+import java.util.List;
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -18,21 +19,48 @@
 import java.util.HashSet;
 class Solution {
     public int numComponents(ListNode head, int[] nums) {
-        int ans = 0;
+        // int ans = 0;
+        // HashSet<Integer> set = new HashSet<>();
+        // for(int num: nums) set.add(num);
+        // while(head != null){
+        //     if(set.contains(head.val)){
+        //         while(head != null  && set.contains(head.val)){
+        //             head = head.next;
+        //         }
+        //         ans++;
+        //     }
+        //     else{
+        //         head = head.next;
+        //     }
+        // }
+        // return ans; 
+        
+        int ans = 0; 
         HashSet<Integer> set = new HashSet<>();
-        for(int num: nums) set.add(num);
+
+        for(int num : nums) set.add(num);
         while(head != null){
             if(set.contains(head.val)){
-                while(head != null  && set.contains(head.val)){
+                while(head != null && set.contains(head.val)){
                     head = head.next;
                 }
                 ans++;
-            }
-            else{
+            }else{
                 head = head.next;
             }
         }
-        return ans; 
+        return ans;
+
+
+
+
+
+        
+
+
+
+
+        
 
     }
 }
