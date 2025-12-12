@@ -20,31 +20,49 @@ import javax.swing.text.DefaultStyledDocument;
  */
 class Solution {
     public ListNode removeNodes(ListNode head) {
-        //we have to do it by reversing the linked list
-        head = reverse(head);
-        ListNode cur = head;
-        while(cur.next != null){
-            if(cur.val > cur.next.val){
-                cur.next = cur.next.next;
-            }
-            else{
-                cur = cur.next;
-            }
-        }
-        return reverse(head);
 
-    }
-    private ListNode reverse(ListNode head){
-        ListNode prev = null;
-        ListNode cur = head;
-        while(cur != null){
-            ListNode next = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = next;
+        if(head.next == null){
+            return head;
         }
-        return prev;
+        ListNode node = removeNodes(head.next);
+        if(node.val > head.val){
+            return node;
+        }
+        head.next = node;
+        return head;
+
+
+        //the reverse linked list method comes from the recursive linkedlist method
+        //we have to do it by reversing the linked list
+    //     head = reverse(head);
+    //     ListNode cur = head;
+    //     while(cur.next != null){
+    //         if(cur.val > cur.next.val){
+    //             cur.next = cur.next.next;
+    //         }
+    //         else{
+    //             cur = cur.next;
+    //         }
+    //     }
+    //     return reverse(head);
+
+    // }
+    // private ListNode reverse(ListNode head){
+    //     ListNode prev = null;
+    //     ListNode cur = head;
+    //     while(cur != null){
+    //         ListNode next = cur.next;
+    //         cur.next = prev;
+    //         prev = cur;
+    //         cur = next;
+    //     }
+    //     return prev;
     }
+
+
+
+
+
 }
 // @lc code=end
 
