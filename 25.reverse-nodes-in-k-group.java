@@ -17,17 +17,45 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-        int n = 0;
+        // int n = 0;
+        // ListNode cnt = head;
+        // ListNode dummy = new ListNode(0, head);
+        // ListNode dummyhead = dummy;
+        // ListNode cur = head;
+        // while(cnt != null){
+        //     n++;
+        //     cnt = cnt.next;
+        // }
+        // int groups = n / k; // how many groups with length k we are able to reverse
+        // while(groups > 0){
+        //     ListNode prev = null;
+        //     for(int i = 0; i < k; i++){
+        //         ListNode next = cur.next;
+        //         cur.next = prev;
+        //         prev = cur;
+        //         cur = next;
+        //     }
+        //     ListNode first = dummyhead.next;
+        //     first.next = cur;
+        //     dummyhead.next = prev;
+        //     dummyhead = first;
+        //     groups--; 
+        // }
+        // return dummy.next;
+
+        int len = 0;
         ListNode cnt = head;
-        ListNode dummy = new ListNode(0, head);
-        ListNode dummyhead = dummy;
-        ListNode cur = head;
         while(cnt != null){
-            n++;
+            len++;
             cnt = cnt.next;
         }
-        int groups = n / k; // how many groups with length k we are able to reverse
-        while(groups > 0){
+        int iter = len/k;
+
+        ListNode dummy = new ListNode(0, head);
+        ListNode tmp = dummy;
+        ListNode cur = head;
+
+        while(iter-- > 0){
             ListNode prev = null;
             for(int i = 0; i < k; i++){
                 ListNode next = cur.next;
@@ -35,13 +63,13 @@ class Solution {
                 prev = cur;
                 cur = next;
             }
-            ListNode first = dummyhead.next;
-            first.next = cur;
-            dummyhead.next = prev;
-            dummyhead = first;
-            groups--; 
+            ListNode tail = tmp.next;
+            tail.next = cur;
+            tmp.next = prev;
+            tmp = tail;
         }
         return dummy.next;
+
         
         
     }
