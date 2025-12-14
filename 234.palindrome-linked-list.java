@@ -38,38 +38,38 @@ class Solution {
         // }
         // return true;
         //todo solve it using the fast and slow pointers
-        ListNode mid = middleNode(head);
-        ListNode head2 = reverse(mid);
-        while(head2 != null){
-            if(head.val != head2.val){
-                return false;
-            }
-            head = head.next;
-            head2 = head2.next;
-        }
-        return true;
+        // ListNode mid = middleNode(head);
+        // ListNode head2 = reverse(mid);
+        // while(head2 != null){
+        //     if(head.val != head2.val){
+        //         return false;
+        //     }
+        //     head = head.next;
+        //     head2 = head2.next;
+        // }
+        // return true;
 
     }
-    private ListNode middleNode(ListNode head){
-        ListNode slow = head;
-        ListNode fast = head;
-        while(fast != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-        return slow;
-    }
-    private ListNode reverse(ListNode head){
-        ListNode prev = null;
-        ListNode cur = head;
-        while(cur != null){
-            ListNode next = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = next;
-        }
-        return prev;
-    }
+    // private ListNode middleNode(ListNode head){
+    //     ListNode slow = head;
+    //     ListNode fast = head;
+    //     while(fast != null && fast.next != null){
+    //         slow = slow.next;
+    //         fast = fast.next.next;
+    //     }
+    //     return slow;
+    // }
+    // private ListNode reverse(ListNode head){
+    //     ListNode prev = null;
+    //     ListNode cur = head;
+    //     while(cur != null){
+    //         ListNode next = cur.next;
+    //         cur.next = prev;
+    //         prev = cur;
+    //         cur = next;
+    //     }
+    //     return prev;
+    // }
 }
 // @lc code=end
 

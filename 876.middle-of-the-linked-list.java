@@ -17,22 +17,34 @@
  */
 class Solution {
     public ListNode middleNode(ListNode head) {
-        if(head.next == null){
-            return head;
-        }
-        int cnt = 0;
-        ListNode traverse = head;
-        while(traverse != null){
-            cnt += 1;
-            traverse = traverse.next;
-        }
-        int middle = cnt/2;
-        ListNode middleNode = head;
-        for(int i = 0; i < middle; i++){
-            middleNode = middleNode.next;
-        }
-        return middleNode;
-        
+        // if(head.next == null){
+        //     return head;
+        // }
+        // int cnt = 0;
+        // ListNode traverse = head;
+        // while(traverse != null){
+        //     cnt += 1;
+        //     traverse = traverse.next;
+        // }
+        // int middle = cnt/2;
+        // ListNode middleNode = head;
+        // for(int i = 0; i < middle; i++){ 
+        //     middleNode = middleNode.next;
+        // }
+        // return middleNode;
+
+        //! two pointer: fast and slow approach complete in one past
+        // int cnt = 1;
+        // ListNode fast = head; 
+        // ListNode slow = head;
+        // while(fast != null && fast.next != null){
+        //     fast = fast.next.next;
+        //     slow = slow.next;
+        //     cnt += 2;
+        // } 
+
+        // return slow;
+
     }
 }
 // @lc code=end

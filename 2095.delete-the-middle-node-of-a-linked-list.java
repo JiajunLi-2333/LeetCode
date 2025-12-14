@@ -17,17 +17,29 @@
  */
 class Solution {
     public ListNode deleteMiddle(ListNode head) {
+        // if(head.next == null) return null;
+        // int cnt = 0;
+        // ListNode traverse = head, middle = head;
+        // while(traverse != null){
+        //     cnt += 1;
+        //     traverse = traverse.next;
+        // }
+        // for(int i = 0; i < cnt/2 - 1; i++){
+        //     middle = middle.next;
+        // }
+        // middle.next = middle.next.next;
+        // return head;
+
+        //! fast and slow approach to reduce redundancy 
         if(head.next == null) return null;
-        int cnt = 0;
-        ListNode traverse = head, middle = head;
-        while(traverse != null){
-            cnt += 1;
-            traverse = traverse.next;
+        ListNode dummy = new ListNode(0, head);
+        ListNode slow = dummy;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
         }
-        for(int i = 0; i < cnt/2 - 1; i++){
-            middle = middle.next;
-        }
-        middle.next = middle.next.next;
+        slow.next = slow.next.next;
         return head;
     }
 }
