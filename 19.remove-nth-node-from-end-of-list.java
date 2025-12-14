@@ -17,7 +17,8 @@
  */
 class Solution {
     public ListNode removeNthFromEnd(ListNode head, int n) {
-        //use two nodes to finish the problem
+
+        //!use two pointer to finish the problem
         ListNode dummy = new ListNode(0, head);
         ListNode node1 = head;
         ListNode node2 = dummy;
@@ -30,6 +31,23 @@ class Solution {
         }
         node2.next = node2.next.next;
         return dummy.next;
+
+        //!Without the two pointer technique
+        // int cnt = 0; 
+        // for(ListNode cur = head; cur != null; cur = cur.next){
+        //     cnt++; 
+        // }
+        // ListNode dummy = new ListNode(0, head);
+
+        // int target = cnt - n;
+        // ListNode cur = dummy;
+        // for(int i = 0; i < target; i++){
+        //     cur = cur.next;
+        // }
+        // cur.next = cur.next.next;
+        // return dummy.next;
+
+
     }
 }
 // @lc code=end
