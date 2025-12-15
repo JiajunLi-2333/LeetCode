@@ -32,19 +32,19 @@ public class Solution {
         // return fast;
 
         //todo A much fast approach to achieve the result using slow and fast pointers
-        ListNode fast = head, slow = head;
-        while(fast != null && fast.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-            if(fast == slow){
-                while(head != slow){
-                    head = head.next;
-                    slow = slow.next;
-                }
-                return slow;
-            }
-        }
-        return null;
+        // ListNode fast = head, slow = head;
+        // while(fast != null && fast.next != null){
+        //     slow = slow.next;
+        //     fast = fast.next.next;
+        //     if(fast == slow){
+        //         while(head != slow){
+        //             head = head.next;
+        //             slow = slow.next;
+        //         }
+        //         return slow;
+        //     }
+        // }
+        // return null;
     }
 }
 // @lc code=end
