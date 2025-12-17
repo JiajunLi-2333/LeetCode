@@ -17,16 +17,31 @@
  */
 class Solution {
     public ListNode oddEvenList(ListNode head) {
-        ListNode odd = head;
-        if(odd == null){
+        // ListNode odd = head;
+        // if(odd == null){
+        //     return head;
+        // }
+        // ListNode even = head.next, cur = head.next;
+        // if(even == null || even.next == null){
+        //     return head;
+        // }
+        // while(odd.next != null && even.next != null){
+        //     //change the nodes
+        //     odd.next = even.next;
+        //     even.next = even.next.next;
+        //     odd = odd.next;
+        //     even = even.next;
+        // }
+        // odd.next = cur;
+        // return head;
+        //! 双指针标记链表头
+        if(head == null || head.next == null){
             return head;
         }
-        ListNode even = head.next, cur = head.next;
-        if(even == null || even.next == null){
-            return head;
-        }
+
+        ListNode odd = head, even = head.next, cur = head.next;
+
         while(odd.next != null && even.next != null){
-            //change the nodes
             odd.next = even.next;
             even.next = even.next.next;
             odd = odd.next;
@@ -34,6 +49,7 @@ class Solution {
         }
         odd.next = cur;
         return head;
+
     }
 }
 // @lc code=end

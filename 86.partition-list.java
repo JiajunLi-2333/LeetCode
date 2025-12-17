@@ -17,24 +17,25 @@
  */
 class Solution {
     public ListNode partition(ListNode head, int x) {
-        if(head == null||head.next == null){
-            return head;
-        }
-        ListNode smallDummy = new ListNode(0), bigDummy = new ListNode(0);
-        ListNode small = smallDummy, big = bigDummy;
-        while(head != null){
-            if(head.val < x){
-                small.next = head;
-                small = head;
-            }else{
-                big.next = head;
-                big = head;
-            }
-            head = head.next;
-        }
-        small.next = bigDummy.next;
-        big.next = null;
-        return smallDummy.next;
+        // if(head == null||head.next == null){
+        //     return head;
+        // }
+        // ListNode smallDummy = new ListNode(0), bigDummy = new ListNode(0);
+        // ListNode small = smallDummy, big = bigDummy;
+        // while(head != null){
+        //     if(head.val < x){
+        //         small.next = head;
+        //         small = head;
+        //     }else{
+        //         big.next = head;
+        //         big = head;
+        //     }
+        //     head = head.next;
+        // }
+        // small.next = bigDummy.next;
+        // big.next = null;
+        // return smallDummy.next;
+        
         
     }
 }
