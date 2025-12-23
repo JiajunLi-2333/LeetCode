@@ -21,20 +21,26 @@
  * }
  */
 class Solution {
-    private int ans = 0;
     public int sumOfLeftLeaves(TreeNode root) {
-        dfs(root);
-        return ans;
+        return dfs(root);
     }
-    private void dfs(TreeNode root){
-        if(root == null) return;
-        dfs(root.left);
-        if(root.left != null && root.left.left == null && root.left.right == null){
-            ans += root.left.val;
+
+    private int dfs(TreeNode root) {
+        if (root == null) {
+            return 0;
         }
         
-        dfs(root.right);
+        int sum = 0;
+        // 判断左子节点是否是叶子节点
+        if (root.left != null && root.left.left == null && root.left.right == null) {
+            sum += root.left.val;
+        } else {
+            sum += dfs(root.left);  // 左子节点不是叶子，继续递归
+        }
         
+        sum += dfs(root.right);  // 递归右子树
+        
+        return sum;
     }
 }
 

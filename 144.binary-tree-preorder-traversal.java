@@ -22,17 +22,21 @@ import java.util.*;
  */
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
-        //遍历二叉树获得前序遍历结果
-        List<Integer> ans = new ArrayList<>();
-        helper(root, ans);
-        return ans;
+        List<Integer> list = new ArrayList<>();
+        dfs(root, list);
+        return list;
     }
-    private void helper(TreeNode root, List<Integer> ans){
-        if(root == null) return;
-        ans.add(root.val);
-        helper(root.left, ans);
-        helper(root.right, ans);
+    public void dfs(TreeNode root, List<Integer> list){
+        if(root == null){
+            return;
+        }
+        list.add(root.val);
+        dfs(root.left, list);
+        dfs(root.right, list);        
     }
+    
+
+
 }
 // @lc code=end
 

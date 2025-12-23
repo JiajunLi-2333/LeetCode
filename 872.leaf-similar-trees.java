@@ -22,23 +22,26 @@ import java.util.*;
  */
 class Solution {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        List<Integer> leaves1 = new ArrayList<>();
-        List<Integer> leaves2 = new ArrayList<>();
-        dfs(root1, leaves1);
-        dfs(root2, leaves2);
-        return leaves1.equals(leaves2);
+        List<Integer> list1 = new ArrayList<>();
+        List<Integer> list2 = new ArrayList<>();
+        dfs(root1, list1);
+        dfs(root2, list2);
+        return list1.equals(list2);
     }
-    private void dfs(TreeNode root, List<Integer> leaves){
-        //递归中止条件
-        if(root == null) return;
-
-        //采用前序遍历，如果节点无左右子树，则加入叶子节点列表
+    public void dfs(TreeNode root, List<Integer> list){
+        if(root == null){
+            return;
+        }
+        dfs(root.left, list);
+        //遍历过程中收集结果
         if(root.left == null && root.right == null){
-            leaves.add(root.val);
-        } 
-        dfs(root.left, leaves);
-        dfs(root.right, leaves);
+            list.add(root.val);
+        }
+        dfs(root.right, list);
     }
+
+
+
 }
 // @lc code=end
 
