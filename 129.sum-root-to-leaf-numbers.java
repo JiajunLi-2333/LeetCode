@@ -22,7 +22,19 @@
  */
 class Solution {
     public int sumNumbers(TreeNode root) {
-        
+        int ans = dfs(root, 0);
+        return ans;
+    }
+    public int dfs(TreeNode node, int x){
+        if(node == null){//左右子节点是空节点直接返回0
+            return 0;
+        }
+
+        x = x * 10 + node.val;
+        if(node.left == null && node.right == null){
+            return x;
+        }
+        return dfs(node.left, x) + dfs(node.right, x);
     }
 }
 // @lc code=end

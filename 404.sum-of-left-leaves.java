@@ -22,29 +22,24 @@
  */
 class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
-        return dfs(root);
+    
+        int ans = dfs(root, 0);
+        return ans;
     }
 
-    private int dfs(TreeNode root) {
-        if (root == null) {
+    public int dfs(TreeNode node, int sum){
+        if(node == null){
             return 0;
         }
-        
-        int sum = 0;
-        // 判断左子节点是否是叶子节点
-        if (root.left != null && root.left.left == null && root.left.right == null) {
-            sum += root.left.val;
-        } else {
-            sum += dfs(root.left);  // 左子节点不是叶子，继续递归
+        if(node.left != null && node.left.left == null && node.left.right == null){
+            sum += node.left.val;
         }
-        
-        sum += dfs(root.right);  // 递归右子树
-        
+        sum += dfs(node.left, 0);
+        sum += dfs(node.right, 0);
         return sum;
     }
+
+    
 }
-
-// @lc code=end
-
 // @lc code=end
 

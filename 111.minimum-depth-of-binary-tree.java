@@ -21,21 +21,18 @@
  * }
  */
 class Solution {
-    private int ans = Integer.MAX_VALUE;
+ 
     public int minDepth(TreeNode root) {
-        minNode(root, 0);
-        return ans == Integer.MAX_VALUE ? 0 : ans;
-    }
-    private void minNode(TreeNode root, int cnt){
-        if(root == null) return;
-        cnt++;
-        if(root.left == null && root.right == null) {
-            ans = Math.min(ans, cnt);
-            return;
+        if(root == null){
+            return 0;
         }
-        minNode(root.left, cnt);
-        minNode(root.right, cnt);
-
+        if(root.left == null){
+            return minDepth(root.right) + 1;
+        }
+        if(root.right == null){
+            return minDepth(root.left) + 1;
+        }
+        return Math.min(minDepth(root.left), minDepth(root.right)) + 1;
     }
 }
 // @lc code=end
