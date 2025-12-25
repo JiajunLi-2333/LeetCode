@@ -34,7 +34,7 @@ class Solution {
             sum += node.left.val;
             return sum + dfs(node.right);
         }
-        return sum + dfs(node.left) + dfs(node.right);
+        return dfs(node.left) + dfs(node.right);
     }
 }
 // @lc code=end
