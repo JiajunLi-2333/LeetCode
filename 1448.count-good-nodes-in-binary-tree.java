@@ -21,27 +21,22 @@
  * }
  */
 class Solution {
+    int count = 0;
     public int goodNodes(TreeNode root) {
-        return dfs(root, root.val);
-        
+        dfs(root, Integer.MIN_VALUE);
+        return count;
     }
-    // private void dfs(TreeNode node, int maxVal){
-    //     if(node == null) return;
-    //     if(node.val >=maxVal){
-    //         ans++;
-    //         maxVal = node.val;
-    //     }
-    //     dfs(node.left, maxVal);
-    //     dfs(node.right, maxVal);
-    // }
-    private int dfs(TreeNode node, int maxVal){
-        //处理边界 空节点开始归
-        if(node == null) return 0;
-        int left = dfs(node.left, Math.max(maxVal, node.val));
-        int right = dfs(node.right, Math.max(maxVal, node.val));
-        return (node.val >= maxVal ? 1 : 0) + left + right;//非边界条件 向下递
 
+    public void dfs(TreeNode node, int max){
+        if(node == null) return;
+        if(node.val >= max){
+            count++;
+            max = node.val;
+        }
+        dfs(node.left, max);
+        dfs(node.right, max);
     }
+    
 }
 // @lc code=end
 

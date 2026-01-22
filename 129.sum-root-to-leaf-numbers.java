@@ -21,21 +21,37 @@
  * }
  */
 class Solution {
+    int ans = 0;
+    int path = 0;
     public int sumNumbers(TreeNode root) {
-        int ans = dfs(root, 0);
+        // int ans = helper(root, 0);
+        // return ans;
+        dfs(root);
         return ans;
     }
-    public int dfs(TreeNode node, int x){
-        if(node == null){//左右子节点是空节点直接返回0
-            return 0;
-        }
 
-        x = x * 10 + node.val;
-        if(node.left == null && node.right == null){
-            return x;
+    //采取先序遍历
+    public void dfs(TreeNode root){
+        if(root == null) return;
+        path = path * 10 + root.val;
+        if(root.left == null && root.right == null){
+            ans += path;
         }
-        return dfs(node.left, x) + dfs(node.right, x);
+        dfs(root.left);
+        dfs(root.right);
+        //回溯
+        path = (path - root.val) / 10;
     }
+
+    //分解子问题 ： 原问题 = 左树之和 + 右树之和
+    //val 代表截至当前节点的累积值 记录temporary state
+//     public int helper(TreeNode root, int val){
+//         if(root == null) return 0;
+//         val = val * 10 + root.val;
+//         if(root.left == null && root.right == null) return val;
+//         return helper(root.left, val) + helper(root.right, val);
+//     }
+// }
 }
 // @lc code=end
 

@@ -21,24 +21,34 @@
  * }
  */
 class Solution {
-    boolean ans = false;
+    // int curSum = 0;
+    // boolean ans = false;
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        dfs(root, targetSum);
-        return ans;
-    }
-    private void dfs(TreeNode node, int sum){
-        //可以开始归了 不用再继续传递下去了
-        if(node == null) return;
-
-        //传递过程中 需要的相同操作
-        sum -= node.val;
-        if(node.left == null && node.right == null){
-            if(sum == 0) ans = true;
-            return;
+        // dfs(root, targetSum);
+        // return ans;
+        if(root == null) return false;
+        targetSum -= root.val;
+        if(root.left == null && root.right == null){
+            return targetSum == 0;
         }
-        dfs(node.left, sum);
-        dfs(node.right, sum);
+        return hasPathSum(root.left, targetSum) || hasPathSum(root.right, targetSum); 
     }
+    
+    // public void dfs(TreeNode node, int targetSum){
+    //     if(node == null) return;
+    //     curSum += node.val;
+    //     if(node.left == null && node.right == null){
+    //         if(curSum == targetSum){
+    //             ans = true;
+    //             return; // early return if path sum is found
+    //         }
+    //     }
+    //     dfs(node.left, targetSum);
+    //     dfs(node.right, targetSum);
+    //     curSum -= node.val;
+    // }
+
+
 }
 // @lc code=end
 
