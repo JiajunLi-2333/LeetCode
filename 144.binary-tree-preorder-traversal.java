@@ -23,20 +23,21 @@ import java.util.*;
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
-        dfs(root, list);
+        if(root == null) return list; //edge case
+        list.add(root.val);
+        list.addAll(preorderTraversal(root.left));
+        list.addAll(preorderTraversal(root.right));
         return list;
     }
-    public void dfs(TreeNode root, List<Integer> list){
-        if(root == null){
-            return;
-        }
-        list.add(root.val);
-        dfs(root.left, list);
-        dfs(root.right, list);        
-    }
-    
 
-
+    // public void dfs(TreeNode root, List<Integer> list){
+    //     if(root == null){
+    //         return;
+    //     }
+    //     list.add(root.val);
+    //     dfs(root.left, list);
+    //     dfs(root.right, list);
+    // }
 }
 // @lc code=end
 

@@ -22,20 +22,16 @@
  */
 class Solution {
     public int sumOfLeftLeaves(TreeNode root) {
-        int ans = dfs(root);
-        return ans;
-    }
-    public int dfs(TreeNode node){
-        int sum = 0; 
-        if(node == null){
-            return sum;
+        int sum = 0;
+        if(root == null) return sum;
+        TreeNode left = root.left;
+        if(left != null && left.left == null & left.right == null){
+            sum += left.val;
         }
-        if(node.left != null && node.left.left == null && node.left.right == null){
-            sum += node.left.val;
-            return sum + dfs(node.right);
-        }
-        return dfs(node.left) + dfs(node.right);
-    }
+        sum += sumOfLeftLeaves(root.left);
+        sum += sumOfLeftLeaves(root.right);
+        return sum;
+    }   
 }
 // @lc code=end
 

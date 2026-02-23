@@ -28,15 +28,14 @@ class Solution {
         dfs(root2, list2);
         return list1.equals(list2);
     }
-    public void dfs(TreeNode root, List<Integer> list){
+    private void dfs(TreeNode root, List<Integer> list){
         if(root == null){
             return;
         }
-        dfs(root.left, list);
-        //遍历过程中收集结果
         if(root.left == null && root.right == null){
             list.add(root.val);
         }
+        dfs(root.left, list);
         dfs(root.right, list);
     }
 

@@ -21,6 +21,8 @@
  * }
  */
 class Solution {
+    int ans = -1;
+    int curDepth = 0;// the depth of the current node
     public int maxDepth(TreeNode root) {
         // if(root == null){
         //     return 0;
@@ -28,6 +30,22 @@ class Solution {
         // int left = maxDepth(root.left);
         // int right = maxDepth(root.right);
         // return Math.max(left, right) + 1;
+        if(root == null) return 0;
+        dfs(root);
+        return ans;
+
+
+    }
+    public void dfs(TreeNode root){
+        if (root == null) return;
+        curDepth += 1;
+        if(root.left == null && root.right == null){
+            ans = Math.max(ans, curDepth);
+        } 
+
+        dfs(root.left);
+        dfs(root.right);
+        curDepth -= 1;
     }
 }
 // @lc code=end
