@@ -21,15 +21,18 @@
  * }
  */
 class Solution {
+    private int ans = 0;
     public int longestZigZag(TreeNode root) {
-        
+        dfs(root, 0, true);
+        return ans;
     }
-    private int dfs(TreeNode root, int direct, int len){
-        //edge case
-        
-        
-    }
+    private void dfs(TreeNode root, int len, boolean isLeft){//len作为参数状态跟随
+        if(root == null) return;
+        ans = Math.max(ans, len);
 
+        dfs(root.left, isLeft ? 1 : len + 1,true);
+        dfs(root.right, !isLeft ? 1 : len + 1,false);
+    }
 }
 // @lc code=end
 
