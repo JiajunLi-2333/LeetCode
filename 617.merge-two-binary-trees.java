@@ -27,10 +27,10 @@ class Solution {
 
         TreeNode left = mergeTrees(root1.left, root2.left);
         TreeNode right = mergeTrees(root1.right, root2.right);
-        TreeNode node = new TreeNode(root1.val + root2.val);
-        node.left = left;
-        node.right = right;
-        return node;   
+        root1.val = root1.val + root2.val;
+        root1.left = left;
+        root1.right = right; 
+        return root1; 
     }
 }
 // @lc code=end

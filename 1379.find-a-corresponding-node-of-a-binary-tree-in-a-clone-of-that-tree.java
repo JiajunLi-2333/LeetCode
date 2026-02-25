@@ -17,10 +17,11 @@
 
 class Solution {
     public final TreeNode getTargetCopy(final TreeNode original, final TreeNode cloned, final TreeNode target) {
-        if(original == null || original == target) return cloned; 
-        TreeNode leftRes = getTargetCopy(original.left, cloned.left, target);
-        if(leftRes != null) return leftRes;
-        return getTargetCopy(original.right, cloned.right, target); 
+        if(original == null) return null;
+        if(original == target) return cloned;
+        TreeNode left = getTargetCopy(original.left, cloned.left, target);
+        TreeNode right = getTargetCopy(original.right, cloned.right, target);
+        return left == null ? right : left;
     }
 }
 // @lc code=end

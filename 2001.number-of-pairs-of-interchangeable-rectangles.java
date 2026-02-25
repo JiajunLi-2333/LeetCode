@@ -18,16 +18,29 @@ class Solution {
         //     map.put(ratio, map.getOrDefault(ratio, 0) + 1);
         // }
         // return ans;
-        Map<Double, Long> map = new HashMap<>();
+        
+        //clarification
+        //Given rectangles, count the number of pairs that have the same width to height ratio
+
+        //constraints
+        // n == rectangles.length
+        // 1 <= n <= 10^5
+        // rectangles[i].length == 2
+        // 1 <= widthi, heighti <= 10^5
+        // use decimal division (explicit casting)
+
+        //edge cases
+        // rectangles = [[1,1]] -> 0
+        // rectangles [[a,b],[c,d]] -> 0
+        // rectangles [[a,b][a,b][a,b][a,b]] -> 3 + 2 + 1 = 7
+
+        //solution:
+        Map<Double, Integer> map = new HashMap<>();
         long ans = 0;
-        for(int[] rec: rectangles){
+        for(int[] rec : rectangles){
             double ratio = (double) rec[0] / rec[1];
-            map.put(ratio, map.getOrDefault(ratio, 0L) + 1);
-        }
-        for(long count: map.values()){
-            if(count > 1){
-                ans += count * (count - 1) / 2; // n choose 2
-            }
+            ans += map.getOrDefault(ratio,0);
+            map.put(ratio, map.getOrDefault(ratio, 0) + 1);
         }
         return ans;
     }

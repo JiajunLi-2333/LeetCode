@@ -25,7 +25,9 @@ class Solution {
         if(p == null || q == null){
             return p == q;
         }
-        return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+        boolean leftSub = isSameTree(p.left, q.left);
+        boolean rightSub = isSameTree(p.right, q.right);
+        return leftSub && rightSub && p.val == q.val;
     }
 }
 // @lc code=end

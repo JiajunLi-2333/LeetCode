@@ -8,25 +8,43 @@
 import java.util.Arrays;
 class Solution {
     public int maxSum(int[] nums) {
-        int ans = -1;
-        int[] cnt = new int[10];
-        Arrays.fill(cnt, Integer.MIN_VALUE);   
+        //clarification
+        //Given integer array nums, we want the pairs that have the same largest digit -> the maximum sum
+
+        //constriants
+        //2 <= nums.length <= 100
+        //1 <= nums[i] <= 10^4
+
+        //edge case
+        //Garantueed that there will be at least to numbers
+        //nums = [10, 23] -> -1
+        //nums = [17, 27, 88, 89, 67] -> 27 + 67
+
+        //solution
+        int[] map = new int[10];//notice: still need 10
+        int ans = Integer.MIN_VALUE; 
+        Arrays.fill(map, -1);
         for(int num : nums){
-            int d = maxDigit(num);
-            ans = Math.max(ans, cnt[d] + num);
-            cnt[d] = Math.max(cnt[d], num);
+            int digit = Digit(num);
+            if(map[digit] != -1){
+                ans = Math.max(ans, num + map[digit]);
+            }
+            if(num > map[digit]){
+                map[digit] = num;
+            }
         }
+        return ans == Integer.MIN_VALUE ? -1 : ans;
+    }
+    private int Digit(int num){
+        int ans = -1;
+        while(num >= 10){
+            ans = Math.max(ans, num % 10);
+            num /= 10;
+        }
+        ans = Math.max(ans, num);
         return ans;
     }
-    private int maxDigit(int n){
-        int max = 0;
-        int x = n;
-        while(x > 0){
-            max = Math.max(max, x % 10);
-            x /= 10;
-        }
-        return max;
-    }
+  
 }
 // @lc code=end
 

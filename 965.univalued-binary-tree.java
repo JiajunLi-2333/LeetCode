@@ -22,13 +22,12 @@
  */
 class Solution {
     public boolean isUnivalTree(TreeNode root) {
-        if(root == null ) return true;
+        if(root == null) return true;
         boolean left = isUnivalTree(root.left);
         boolean right = isUnivalTree(root.right);
-
         if(!left || !right) return false;
-        if(root.left != null && root.left.val != root.val) return false;
-        if(root.right != null && root.right.val != root.val) return false; 
+        if(root.left != null && root.val != root.left.val) return false;
+        if(root.right != null && root.val != root.right.val) return false;
         return true;
     }
 }
