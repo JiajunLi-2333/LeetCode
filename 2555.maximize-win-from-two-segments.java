@@ -7,7 +7,7 @@
 // @lc code=start
 class Solution {
     public int maximizeWin(int[] prizePositions, int k) {
-        
+         
     }
 }
 // @lc code=end

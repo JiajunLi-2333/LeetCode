@@ -8,40 +8,38 @@ import java.util.List;
 // @lc code=start
 class Solution {
     public String simplifyPath(String path) {
+        //clarification
+        //given string, we need to simplify it according to the following rules
+        // . and .. need to be removed
+        // "//" and "///" need to be removed 
+        
+        //constraints
+        // 1 <= path.length <= 3000
+        // path : English letters, digits, . / _
+        // path is already a valid absolute Unix path -> /a/ss/...
 
-        //Build the result first and deal with the / in a later step
-        String[] fileAndDirs = path.split("/");
-
-        List<String> ans = new ArrayList<>();
-
-        for(String fileOrDir : fileAndDirs){
-
-            //Ignore the . and empty strings
-            if(fileOrDir.equals("") || fileOrDir.equals(".")){
+        //cases
+        //path: "///home" -> "/home"
+        //path: "/home///" -> "/home"
+        //path: "/home/.." -> "/"
+        //path: "/../" -> "/"
+        //path: "/home/user/picture/./../documents" -> "/home/user/documents"
+        //path: "/"
+        
+        List<String> stack = new ArrayList<>();
+        //after split, all / will be gone
+        for(String s : path.split("/")){
+            if(s.isEmpty() || s.equals("." )){
                 continue;
             }
-            else if(fileOrDir.equals("..")){
-                //If we encounter a .., we need to remove the last element from the result
-                if(!ans.isEmpty()){
-                    ans.remove(ans.size() - 1);
-                }else{
-                    //If the result is empty, we can ignore the ..
-                    continue;
-                }
+            if(!s.equals("..")){
+                stack.add(s);
             }
-            else{
-                ans.add(fileOrDir);
+            else if(!stack.isEmpty()){
+                stack.remove(stack.size() - 1);
             }
         }
-        String res = "/";
-        for(int i = 0; i < ans.size(); i++){
-            res += ans.get(i);
-            if(i != ans.size() - 1){
-                res += "/";
-            }
-        }
-        return res;
-
+        return "/" + String.join("/",stack);
     }
 }
 // @lc code=end

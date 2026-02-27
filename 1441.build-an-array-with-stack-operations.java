@@ -9,14 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 class Solution {
     public List<String> buildArray(int[] target, int n) {
+        //clarification 
+        //we need to fill and modify an empty stack with n integers to make the stack == target, return the operations (Push Pop) needed
+
+        //constriants
+        //1 <= target.length <= 100
+        //target is increasing
+        //1 <= n <= 100
+        //1 <= target[i] <= n
+
         List<String> ans = new ArrayList<>();
-        int index = 0;
-        for(int i = 1; i <= n && index < target.length; i++){ // you can add different variables to judge the condition here
+        int mx = target[target.length - 1];
+        int i = 0;
+        for(int x = 1; x <= mx; x++){
             ans.add("Push");
-            if(target[index] != i){
-                ans.add("Pop");
-            }else{
-                index++;
+            if(x == target[i]){
+                i++;
+            }
+            else{
+                ans.add("Pop" );
             }
         }
         return ans;

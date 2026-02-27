@@ -5,47 +5,46 @@
  */
 
 // @lc code=start
-import java.util.List;
-import java.util.ArrayList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Arrays;
 class Solution {
     public String clearStars(String s) {
-        @SuppressWarnings("unchecked")
-        List<Integer>[] stacks = new ArrayList[26];
-        Arrays.setAll(stacks, i -> new ArrayList<>());
-        StringBuilder sb = new StringBuilder();
-        for(char c : s.toCharArray()){
-            sb.append(c);
-        }
-        int n = sb.length();
+        //clarification
+        //string, goal is to remove the *
+        //remove two things: leftmost * and smallest non * character on the left
+        //If we delete from left to right, delete the * when we meet one and the smallest non * character
+        
+        //! we are trying to keep the result lexicographically smallest
+        //we also want to delete the closest one
+        //"a-----a----*" by induction proof method, the condition holds
 
-        for(int i = 0; i < n; i++){
-            char c = s.charAt(i);
-            if(s.charAt(i) == '*'){
-                //Find the first non-empty stack
-                for(int j = 0; j < 26; j++){
-                    if(!stacks[j].isEmpty()){
-                        int index = stacks[j].remove(stacks[j].size() - 1);
-                        sb.setCharAt(index, '*');
-                        break;
-                    }
-                }
-            }else{
-                int index = c - 'a';
-                if(stacks[index] == null) {
-                    stacks[index] = new ArrayList<>();
-                }
-                stacks[index].add(i);
+        Deque<Integer>[] stacks = new ArrayDeque[26];
+        Arrays.setAll(stacks, i -> new ArrayDeque<>());
+        String ans = "";
+        
+        StringBuilder sb = new StringBuilder(s);
+        for(int i = 0; i < sb.length(); i++){
+            char c = sb.charAt(i);
+            if(c != '*'){
+                stacks[c - 'a'].push(i);
+                continue;
             }
 
-        }
-        StringBuilder result = new StringBuilder();
-        for(int i = 0; i < n; i++){
-            if(sb.charAt(i) != '*'){
-                result.append(sb.charAt(i));
+            for(int j = 0; j < stacks.length; j++){
+                if(!stacks[j].isEmpty()){
+                    int remove = stacks[j].pop();
+                    sb.setCharAt(remove, '/');
+                    break;
+                }
             }
+            sb.setCharAt(i, '/');
         }
-        return result.toString();
+        String[] intermediate = sb.toString().split("/");
+        for(String str : intermediate){
+            ans += str;
+        }
+        return ans;
     }
 }
 // @lc code=end
