@@ -22,12 +22,20 @@
  */
 class Solution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
+        //boundary condition
         if(p == null || q == null){
-            return p == q;
+            if(p == q) return true;
+            if(p != q) return false;
         }
-        boolean leftSub = isSameTree(p.left, q.left);
-        boolean rightSub = isSameTree(p.right, q.right);
-        return leftSub && rightSub && p.val == q.val;
+
+        Boolean left = isSameTree(p.left, q.left);
+        Boolean right = isSameTree(p.right, q.right);
+
+        //non-boundary condition
+        return p.val == q.val && left && right;
+
+
+        
     }
 }
 // @lc code=end

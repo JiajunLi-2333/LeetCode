@@ -29,7 +29,7 @@ class Solution {
         if(root.left != null && root.val != root.left.val) return false;
         if(root.right != null && root.val != root.right.val) return false;
         return true;
-    }
+    } 
 }
 // @lc code=end
 
