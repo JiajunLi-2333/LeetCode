@@ -7,12 +7,21 @@ import java.util.*;
 // @lc code=start
 class StockSpanner {
 
+    private Deque<int[]> stack = new ArrayDeque<>();
+    private int cur = -1;
     public StockSpanner() {
-
+        stack.push(new int[]{-1, Integer.MAX_VALUE});
     }
     
     public int next(int price) {
-    
+        while(price >= stack.peek()[1]){
+            stack.pop();
+        }
+
+        cur++; 
+        int ans = cur - stack.peek()[0];
+        stack.push(new int[]{cur, price});
+        return ans;
     }
 }
 
