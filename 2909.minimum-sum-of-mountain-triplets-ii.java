@@ -23,22 +23,24 @@ class Solution {
         //     }
         // }
         // return ans == Integer.MAX_VALUE ? -1 : ans;
-        int n = nums.length;
-        int ans = Integer.MAX_VALUE, preMIN = nums[0];
-        int[] RightMIN = new int[n];
-        RightMIN[n - 1] = nums[n - 1];
-        for(int i = n -2; i > 1; i--){
-            RightMIN[i] = Math.min(RightMIN[i + 1], nums[i]);
+
+        int n = nums.length; 
+        int[] suf = new int[n];
+        suf[n - 1] = nums[n - 1];//后缀最小值
+        for(int i = n - 2; i > 0; i--){
+            suf[i] = Math.min(suf[i+ 1], nums[i]);
         }
 
-        for(int i = 1; i < n -1; i++ ){
-            if (preMIN < nums[i] && RightMIN[i + 1] < nums[i]){
-                ans = Math.min(ans, preMIN + nums[i] + RightMIN[i + 1]);
+        int[] pre = new int[n];
+        pre[0] = nums[0];
+        int ans = Integer.MAX_VALUE;
+        for(int j = 1; j < n -1; j++){
+            if(pre[j - 1] < nums[j] && suf[j + 1] < nums[j]){
+                ans = Math.min(pre[j - 1] + nums[j] + suf[j + 1], ans);
             }
-            preMIN = Math.min(preMIN, nums[i]);
+            pre[j] = Math.min(pre[j -1], nums[j]);
         }
         return ans == Integer.MAX_VALUE ? -1 : ans;
-
     }
 }
 // @lc code=end

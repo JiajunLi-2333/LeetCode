@@ -3,45 +3,51 @@
  *
  * [456] 132 Pattern
  */
-import java.util.Stack;
+import java.util.*;
 // @lc code=start
 class Solution {
     public boolean find132pattern(int[] nums) {
-        // Logically it is correct but it exceeds the time limit
-        // int n = nums.length;
-        // if(nums.length < 3)
-        //     return false;
-        // int min = nums[0];
-        // for(int i=0;i<n;i++){
-        //     min = Math.min(min,nums[i]); // 找到最小值即1
-        //     if(min == nums[i])// 若最小值为当前值则进行下一次遍历
-        //         continue;
-        //     for(int j=n-1;j>i;j--)
-        //     {
-        //         if(min < nums[j] && nums[j] < nums[i]) //若出现32则返回正确
-        //             return true;
-        //     }
-        // }
-        // return false;
-        //! Iterate i, update k, and check if we can find a j
+        //clarification
+        //(i,j,k) 
+        // i  < j < k 有序 ordered
+        // nums[j] is the greatest, nums[i] is the smallest and nums[k] is in between
 
-        //The Stack is used to keep track of the potential 3's in the 132 pattern. Once we find nums[k] > nums[i] we can return true
-        Stack<Integer> stack = new Stack<>();
-        int n = nums.length;
-        int k = Integer.MIN_VALUE; //
-        for(int i = n -1; i >= 0; i--){
-            if(nums[i] < k){
+        //constriant 
+        // n == nums.length
+        // 1 <= n <= 2 * 10^5
+        // -10^9 <= nums[i] <= 10^9
+
+        //edge case
+        // n < 3 -> false
+        // nums are increasing or decreasing -> false
+        // nums have all the same numbers -> false
+
+        //solution
+        //intuitive: nested for loops
+
+        int n = nums.length; 
+        if(n < 3){
+            return false;
+        }
+        int[] suf = new int[n];
+        suf[0] = nums[0];
+
+        for(int i = 1 ; i < n; i++){
+            suf[i] = Math.min(suf[i - 1], nums[i]);
+        }
+
+        Deque<Integer> stack = new ArrayDeque<>(); // monotonically decreasing stack
+
+        for(int j = n - 1; j > 0; j--){
+            while(!stack.isEmpty()&& stack.peek() <= suf[j - 1]){
+                stack.pop();
+            }
+            if(!stack.isEmpty() && nums[j] > stack.peek()){
                 return true;
             }
-            while(!stack.isEmpty() && nums[i] > stack.peek()){
-                int top = stack.pop();
-                k = top;
-            }
-            stack.push(nums[i]);
+            stack.push(nums[j]);
         }
         return false;
-
-
     }
 }
 // @lc code=end
