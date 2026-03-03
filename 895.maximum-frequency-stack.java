@@ -3,35 +3,29 @@
  *
  * [895] Maximum Frequency Stack
  */
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 // @lc code=start
 class FreqStack {
-    private final Map<Integer, Integer> freqMap = new HashMap<>();
-    private final List<Stack<Integer>> stacks = new ArrayList<>();
-    
+    private Map<Integer, Deque<Integer>> freqGroup; //key: frequency, value: stack which stores value. 
+    private Map<Integer, Integer> freqMap;
+    private int maxFreq;
     public FreqStack() {
-        
+        this.maxFreq = 0;
+        this.freqGroup = new HashMap<>();
+        this.freqMap = new HashMap<>();
     }
     
     public void push(int val) {
-        int count = freqMap.getOrDefault(val, 0);
-        if(count == stacks.size()){
-            stacks.add(new Stack<>());
-        }
-        stacks.get(count).push(val);
-        freqMap.put(val, count + 1);
+        int freq = freqMap.merge(val, 1, Integer::sum);
+        freqGroup.computeIfAbsent(freq, i -> new ArrayDeque<>()).push(val);
+        maxFreq = Math.max(maxFreq, freq);
     }
     
     public int pop() {
-        int lastIndex = stacks.size() - 1;
-        int val = stacks.get(lastIndex).pop();
-        freqMap.put(val, freqMap.get(val) - 1);
-        if(stacks.get(lastIndex).isEmpty()) {
-            stacks.remove(lastIndex);
+        int val = freqGroup.get(maxFreq).pop();
+        freqMap.merge(val, -1, Integer::sum);
+        if(freqGroup.get(maxFreq).isEmpty()){
+            maxFreq--;
         }
         return val;
     }
