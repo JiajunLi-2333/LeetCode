@@ -3,18 +3,16 @@
  *
  * [155] Min Stack
  */
-import java.util.Stack;
+import java.util.*;
 // @lc code=start
 class MinStack {
-    //the Key concept here is prefix
-    private final Stack<int[]> stack = new Stack<>();
+    Deque<int[]> stack = new ArrayDeque();
     public MinStack() {
-        
+        stack.push(new int[]{-1,Integer.MAX_VALUE});
     }
     
     public void push(int val) {
-        int min = stack.isEmpty() ? val : Math.min(val, getMin());
-        stack.push(new int[]{val,min});
+        stack.push(new int[]{val,Math.min(val, stack.peek()[1])});
     }
     
     public void pop() {
@@ -24,7 +22,7 @@ class MinStack {
     public int top() {
         return stack.peek()[0];
     }
-    
+
     public int getMin() {
         return stack.peek()[1];
     }
