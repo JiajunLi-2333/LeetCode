@@ -21,13 +21,19 @@
  * }
  */
 class Solution {
+    private boolean ans = false;
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        if(root == null) return false;
-        boolean check = false;
-        if(root.val == subRoot.val){
-            check = isSameTree(root, subRoot);
+        dfs(root,subRoot);
+        return ans;
+    }
+    private void dfs(TreeNode p, TreeNode q){
+        if(p == null || ans) return;
+        if(isSameTree(p, q)){
+            ans = true;
+            return;
         }
-        return check || isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
+        dfs(p.left, q);
+        dfs(p.right, q);
     }
 
     private boolean isSameTree(TreeNode p, TreeNode q){
