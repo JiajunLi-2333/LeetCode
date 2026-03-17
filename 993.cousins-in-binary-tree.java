@@ -28,19 +28,19 @@ class Solution {
         return dfs(root, null, 1, x, y);
     }
 
-    private boolean dfs(TreeNode node, TreeNode fa, int d, int x, int y) {
-        if (node == null) {
-            return false;
-        }
-        if (node.val == x || node.val == y) { // 找到 x 或 y
-            if (depth > 0) { // 之前已找到 x y 其中一个
-                return depth == d && father != fa;
+    private boolean dfs(TreeNode root, TreeNode parent, int d, int x, int y){
+        if(root == null) return false;
+        if(root.val == x || root.val == y){
+            if(father != null){
+                return depth == d && parent != father;
             }
-            depth = d; // 之前没找到，记录信息
-            father = fa;
+            depth = d;
+            father = parent;
         }
-        return dfs(node.left, node, d + 1, x, y) || dfs(node.right, node, d + 1, x, y);
+        return dfs(root.left, root, d + 1, x, y) || dfs(root.right, root, d + 1, x, y);
     }
+
+    
 }
 // @lc code=end
 
