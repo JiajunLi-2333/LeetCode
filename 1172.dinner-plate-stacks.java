@@ -6,49 +6,57 @@
 import java.util.*; 
 // @lc code=start
 class DinnerPlates {
-    //min-heap
-    PriorityQueue<Integer> minHeap;
-    List<Deque<Integer>> row;
-    int capacity;
+    //TODO Clarification
+    //? Push: we need to know what is the leftmost stack with size less than capacity. Moreover, assume the valid stack is S. If S after the push operation is has size bigger than capacity, S stops being the valid leftmost stack.
+    //? Pop: Assume R is the valid rightmost stack. If R is empty after the pop operation, then R stops to be the valid stack to pop items.
+    //? popAtStack: Assume S and R are the two valid leftmost and rightmost stacks, then popAtStack might just de-valid one of them.
+
+    //TODO Brutal Force
+    //? initialize a stack array and use a for loop every time to find right stack to pop or push. Time Complexity: O(n)?  
+
+    //TODO Optimization: Use MinHeap
+    //? Initialize a list of stacks. The pop operation needs not to be maintained as we are always poping from the last non-empty stack in the list. Therefore, a minheap is needed to find the leftmost stack with size less than capacity.
+    private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+    private int capacity;
+    private List<Deque<Integer>> stacks = new ArrayList<>();
+    
     public DinnerPlates(int capacity) {
-        this.minHeap = new PriorityQueue<>();
-        this.row = new ArrayList<>();
-        this.capacity = capacity;
+       this.capacity = capacity;
     }
+
     public void push(int val) {
-        if(!minHeap.isEmpty() && minHeap.peek() >= row.size()){
+        if(!minHeap.isEmpty() && stacks.size() <= minHeap.peek()){
             minHeap.clear();
-        }        
+        }
         if(minHeap.isEmpty()){
-            Deque<Integer> stack = new ArrayDeque<>();
+            var stack = new ArrayDeque<Integer>();
             stack.push(val);
-            row.add(stack);
+            stacks.add(stack);
             if(capacity > 1){
-                minHeap.offer(row.size() - 1);
+                minHeap.offer(stacks.size() - 1);
             }
         }else{
-            var stack = row.get(minHeap.peek());
+            var stack = stacks.get(minHeap.peek());
             stack.push(val);
             if(stack.size() == capacity){
                 minHeap.poll();
-            }
+            }   
         }
     }  
     public int pop() {
-        return popAtStack(row.size() -1);
+        return popAtStack(stacks.size() - 1);
     }
     public int popAtStack(int index) {
-        if(index < 0 || index >= row.size() || row.get(index).isEmpty()){
-            return -1;
+        if(index >= stacks.size() || index < 0 || stacks.get(index).isEmpty()){
+            return -1; // invalid operations
         }
-
-        var stack = row.get(index);
+        var stack = stacks.get(index);
         if(stack.size() == capacity){
             minHeap.offer(index);
-        }
+        } 
         int val = stack.pop();
-        while(!row.isEmpty() && row.get(row.size() - 1).isEmpty()){
-            row.remove(row.size() -1);
+        while(!stacks.isEmpty() && stacks.get(stacks.size() -1).isEmpty()){
+            stacks.remove(stacks.size() -1);
         }
         return val;
     }
@@ -62,3 +70,4 @@ class DinnerPlates {
  */
 // @lc code=end
 
+ 

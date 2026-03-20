@@ -3,9 +3,10 @@
  *
  * [3412] Find Mirror Score of a String
  */
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
+import java.util.Deque;
 // @lc code=start
 class Solution {
     public long calculateScore(String s) {
@@ -29,27 +30,22 @@ class Solution {
         //O(n^2) O(n)
 
         //Better solution: map + stack
-
-        Map<Character, Stack<Integer>> map = new HashMap<>();
+        Map<Character, Deque<Integer>> map = new HashMap<>();
+        long ans = 0; 
         char[] c = s.toCharArray();
-        long ans = 0;
         for(int i = 0; i < c.length; i++){
-            char mirror =  (char)('a' + 25 - (c[i] - 'a'));
-            if(map.containsKey(mirror)){
-                int j = map.get(mirror).pop();
+            char complement = (char) ('a' + 'z' - c[i]);
+            if(map.containsKey(complement) && !map.get(complement).isEmpty()){
+                int j = map.get(complement).pop();
                 ans += i - j;
-                if(map.get(mirror).isEmpty()){
-                    map.remove(mirror);
-                }
-            }else{
-                if(!map.containsKey(c[i])){
-                map.put(c[i], new Stack<Integer>());
-                }
-                map.get(c[i]).push(i);
             }
-            
+            else{
+                map.computeIfAbsent(c[i], k -> new ArrayDeque<Integer>()).push(i);
+            }
+
         }
         return ans;
+        
     }
 }
 // @lc code=end

@@ -18,33 +18,35 @@ class Solution {
         //! we are trying to keep the result lexicographically smallest
         //we also want to delete the closest one
         //"a-----a----*" by induction proof method, the condition holds
-
         Deque<Integer>[] stacks = new ArrayDeque[26];
         Arrays.setAll(stacks, i -> new ArrayDeque<>());
-        String ans = "";
-        
-        StringBuilder sb = new StringBuilder(s);
-        for(int i = 0; i < sb.length(); i++){
-            char c = sb.charAt(i);
-            if(c != '*'){
-                stacks[c - 'a'].push(i);
-                continue;
-            }
-
-            for(int j = 0; j < stacks.length; j++){
-                if(!stacks[j].isEmpty()){
-                    int remove = stacks[j].pop();
-                    sb.setCharAt(remove, '/');
-                    break;
+        char[] cArray = s.toCharArray();
+        for(int i = 0; i < cArray.length; i++){
+            if(cArray[i] == '*'){
+                for(int j = 0; j < 26; j++){
+                    if(!stacks[j].isEmpty()){
+                        stacks[j].pop();
+                        break;
+                    }
                 }
             }
-            sb.setCharAt(i, '/');
+            else{
+                stacks[cArray[i] - 'a'].push(i);
+            }
         }
-        String[] intermediate = sb.toString().split("/");
-        for(String str : intermediate){
-            ans += str;
+        char[] c = new char[cArray.length];
+        for(int i = 0; i < stacks.length; i++){
+            while(!stacks[i].isEmpty()){
+                c[stacks[i].pop()] = (char) ('a' + i);
+            }
         }
-        return ans;
+        StringBuilder ans = new StringBuilder();
+        for(int i = 0; i < c.length; i++){
+            if(c[i] != 0){
+                ans.append(c[i]);
+            }
+        }
+        return ans.toString();
     }
 }
 // @lc code=end
