@@ -3,25 +3,28 @@
  *
  * [1003] Check If Word Is Valid After Substitutions
  */
-
+import java.util.*;
 // @lc code=start
 class Solution {
     public boolean isValid(String s) {
-        StringBuilder ans = new StringBuilder();
-        for(int i = 0; i < s.length(); i++){
-            int len = ans.length();
-            char c = s.charAt(i);
-            if(len >= 2 && ans.charAt(len - 2) == 'a' && ans.charAt(len - 1) == 'b' && c == 'c'){
-                ans.deleteCharAt(len -1 );
-                ans.deleteCharAt(len -2);
+        List<Character> stack = new ArrayList<>();
+        for(char c : s.toCharArray()){
+            if(stack.size() == 0){
+                stack.add(c);
             }
-            else
-            {
-                ans.append(c);
+            else{
+                if(c == 'c' && stack.size() > 1 &&stack.get(stack.size() 
+                 - 1) == 'b' && stack.get(stack.size() - 2) == 'a'){
+                stack.remove(stack.size()-1);
+                stack.remove(stack.size()-1);
+
+                }
+                else{
+                    stack.add(c);
+                }
             }
         }
-        return ans.isEmpty();
-        
+        return stack.size() == 0;
     }
 }
 // @lc code=end

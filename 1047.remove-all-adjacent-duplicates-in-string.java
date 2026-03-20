@@ -6,20 +6,27 @@
  * [1047] Remove All Adjacent Duplicates In String
  */
 // @lc code=start
+import java.util.*;
 class Solution {
     public String removeDuplicates(String s) {
-        StringBuilder stack = new StringBuilder();
-        for(int i = 0; i < s.length(); i++){
-            if(!stack.isEmpty() && stack.charAt(stack.length() -1) == s.charAt(i)){
-                stack.deleteCharAt(stack.length() - 1);
-            }
-            else{
-                stack.append(s.charAt(i));
-            }
-        }
-        return stack.toString();
+        Deque<Character> stack = new ArrayDeque<>();
+        for(char c : s.toCharArray()){
+            if(stack.isEmpty()) {
+                stack.push(c);
+            }else{
+                if(c == stack.peek()){
+                    stack.pop();
+                }else{
+                    stack.push(c); 
+                }
 
-        
+            }
+        } 
+        StringBuilder ans = new StringBuilder();
+        while(!stack.isEmpty()){
+            ans.append(stack.pop());
+        }
+        return ans.reverse().toString();
     }
 }
 // @lc code=end
