@@ -3,27 +3,31 @@
  *
  * [1021] Remove Outermost Parentheses
  */
+import java.util.*;
 // @lc code=start
 class Solution {
     public String removeOuterParentheses(String s) {
-        int left = 0, right = 0;
-        StringBuilder ans = new StringBuilder();
+        //TODO Clarification
+        //TODO  s = (()())(())(()(())) can be divided into
+        //TODO (()()) + (()) + (()(())), remove all the outermost parenthesis
+        //TODO ()() + () + ()(())
+
+        int depth = 0; 
+        StringBuilder ans = new StringBuilder(); 
         for(char c : s.toCharArray()){
-            ans.append(c);
             if(c == '('){
-                left++;
+                if(depth > 0) ans.append(c);
+                depth++;
             }
-            else right++;
-            if(!ans.isEmpty() && left == right && left > 0 && right > 0){
-                int primitiveLen = left + right;
-                int startIndex = ans.length() - primitiveLen;
-                ans.deleteCharAt(ans.length() -1);
-                ans.deleteCharAt(startIndex);
-                left = right = 0;
+            else{
+                depth--;
+                if(depth > 0) ans.append(c);
             }
-            
         }
         return ans.toString();
+        
+
+
 
     }
 }

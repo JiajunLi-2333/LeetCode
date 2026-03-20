@@ -3,38 +3,34 @@
  *
  * [2197] Replace Non-Coprime Numbers in Array
  */
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 // @lc code=start
 class Solution {
     public List<Integer> replaceNonCoprimes(int[] nums) {
-        List<Integer> ans = new ArrayList<>();
-        for(int num: nums){
-            ans.add(num);
-            //This needs to be in a while loop
-            while(ans.size() > 1){
-                int a = ans.get(ans.size() -1);
-                int b = ans.get(ans.size() -2);
-                if (GCD(a, b) > 1 ){
-                    ans.remove(ans.size() -1);
-                    ans.set(ans.size() -1,(int)LCM(a, b));
-                }else break;
+        List<Integer> stack = new ArrayList<>();
+        for(int num : nums){
+            stack.add(num);
+            while(stack.size() > 1 && GCD(stack.getLast(), stack.get(stack.size() - 2)) > 1){
+                int last = stack.removeLast();
+                int prev = stack.removeLast();
+                stack.add(LCM(last, prev));
             }
-            
         }
-        return ans;
+        return stack;
+
     }
-    private long GCD(int a, int b){
-        while(b > 0){
-            int t = a % b;
-            a = b;
-            b = t;
+
+    private int GCD(int a, int b ){
+        while(b != 0){
+            int tmp = b; 
+            b = a % b; 
+            a = tmp;
         }
         return a;
     }
-    private long LCM(int a, int b){
-        return (long) (a / GCD(a, b)) * b;
+    private int LCM(int a, int b){
+        return a /GCD(a,b) * b;
     }
 }
 // @lc code=end
