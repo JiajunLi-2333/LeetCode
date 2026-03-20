@@ -7,21 +7,18 @@
 // @lc code=start
 class Solution {
     public int maxDepth(String s) {
-        int left = 0, right = 0,ans = 0;
+        int ans = 0;
+        int cur = 0;
         for(char c : s.toCharArray()){
             if(c == '('){
-                left++;
+                cur++;
+                ans = Math.max(ans, cur); 
             }
             if(c == ')'){
-                right++;
-            }
-            if(left >= right){
-                ans = Math.max(left - right, ans);
-                left -= right;
-                right = 0;
+                cur--;
             }
         }
-        return ans; 
+        return ans;
     }
 }
 // @lc code=end
