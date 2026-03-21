@@ -17,7 +17,6 @@ class Solution {
         //target is increasing
         //1 <= n <= 100
         //1 <= target[i] <= n
-
         List<String> ans = new ArrayList<>();
         int mx = target[target.length - 1];
         int i = 0;
