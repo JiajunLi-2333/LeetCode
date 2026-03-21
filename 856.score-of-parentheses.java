@@ -9,7 +9,7 @@ import java.util.*;
 class Solution {
     public int scoreOfParentheses(String s) {
         int ans = 0;
-        
+        return ans;
     }
 }
 // @lc code=end
