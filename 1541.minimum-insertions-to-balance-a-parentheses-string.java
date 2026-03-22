@@ -4,36 +4,37 @@
  * [1541] Minimum Insertions to Balance a Parentheses String
  */
 
+
+/*
+Clarify:
+Now ( + )) is a balanced pair. Given string s, we need to find the minimum number of insertions needed. 
+?:
+The initiative is that insertion only happens to those who are unmatched. And the optimal solution is how do you plan the insertion. e.g: () can be inserted as ()) or ()) ()). And the greedy is to inserted based on what's left. So we can use stack to eliminate all the matching ones (both independent and nested matches). What is left in the stack are the ones need to be inserted.
+Keyword:Greedy + Stack 
+
+*/
 // @lc code=start
 class Solution {
     public int minInsertions(String s) {
-        int ans = 0;
-        int len = s.length();
-        int left = 0; //count completely unmatched left parentheses
-        
-        //! 重点在补齐 右括号之后直接消除一个左括号 如果没有左括号 那就意味着需要补一个左括号
-        for(int i = 0; i < len; i++){
-            char c = s.charAt(i);
+       int ans = 0;
+       int right = 0;
+       for(char c : s.toCharArray()){
             if(c == '('){
-                left++;
-            }
-            else{
-                if(i + 1 < len && s.charAt(i  + 1) == ')'){
-                    i++;
-                }
-                else{
+                right += 2;
+                if(right % 2 == 1){
                     ans++;
-                }
-                if(left  > 0){
-                    left--;
-                }
-                else{
-                    ans++;
+                    right--;
                 }
             }
-        
-        }
-        return ans + left * 2;      
+            if(c == ')'){
+                right--;
+                if(right == -1){
+                    ans++;
+                    right = 1; 
+                }
+            }
+       }
+       return ans + right;
     }
 }
 // @lc code=end
