@@ -6,7 +6,7 @@
 import java.util.*; 
 /*
 Clarify:
-The question asks what is the mininum number of ( or ) to remove. If we think about under what condition a parenthesis should be removed, it is going to be painful: the numbers have to match and the position needs to be correct. So we think about how to keep valid parenthesis as many as possible. That is to keep all that form paris.
+The question asks what is the mininum number of ( or ) to remove. If we think about under what condition a parenthesis should be removed, it is going to be painful: the numbers have to match and the position needs to be correct. So we think about how to keep valid parenthesis as many as possible. That is to keep all that form pairs.
 Brutal:
 we can scan the string first to find out how many ) we have and iterate through the string. This is the counting way. See details
 Optimize:
