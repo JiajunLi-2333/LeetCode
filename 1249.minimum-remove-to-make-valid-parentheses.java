@@ -3,39 +3,69 @@
  *
  * [1249] Minimum Remove to Make Valid Parentheses
  */
-import java.util.Stack;
+import java.util.*; 
+/*
+Clarify:
+The question asks what is the mininum number of ( or ) to remove. If we think about under what condition a parenthesis should be removed, it is going to be painful: the numbers have to match and the position needs to be correct. So we think about how to keep valid parenthesis as many as possible. That is to keep all that form paris.
+Brutal:
+we can scan the string first to find out how many ) we have and iterate through the string. This is the counting way. See details
+Optimize:
+well, not really an upgrade but if we are finding parentheses that match, might consider stack. stack represent the parenthesis on the left of the string while we iterate to right
+Keyword: Adjacent removal + matching -> stack
+*/
 // @lc code=start
 class Solution {
     public String minRemoveToMakeValid(String s) {
-        //My solution was to use two stacks, one for the opening parentheses and one for the closing parentheses.
-        //However, I realized that I could use a single stack to keep track of the indices of the parentheses that need to be removed.
-        //This way, I can avoid using extra space for the second stack and simplify the logic.
+        // int right = 0; 
+        // for(char c : s.toCharArray()){
+        //     if(c == ')') right++;
+        // }
 
-        //! great optimization
-        int[] remove = new int[s.length()];
-        Stack<Integer> stack = new Stack<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            if (c == '(') {
+        // StringBuilder ans = new StringBuilder();
+        // int left = 0;
+        // for(char c : s.toCharArray()){
+        //     if(c == '('){
+        //         if(right > 0){
+        //             ans.append(c);
+        //             right--;
+        //             left++;
+        //         }
+        //     }else if(c == ')'){
+        //         if(left > 0){
+        //             ans.append(c);
+        //             left--;
+        //         }else{
+        //             right--;
+        //         }
+        //     }else{
+        //         ans.append(c);
+        //     }
+        // }
+        // return ans.toString();
+
+        Deque<Integer> stack = new ArrayDeque<>();
+        boolean[] preserve = new boolean[s.length()];
+        Arrays.fill(preserve, false);
+        for(int i = 0; i < s.length(); i++){
+            if(s.charAt(i) == '('){
                 stack.push(i);
-            } else if (c == ')') {
-                if (!stack.isEmpty()) {
-                    stack.pop();
-                } else {
-                    remove[i] = 1; // Mark this ')' for removal
+            }else if(s.charAt(i) == ')'){
+                if(!stack.isEmpty() && s.charAt(stack.peek()) == '(' ){
+                    int index = stack.pop();
+                    preserve[index] = true;
+                    preserve[i] = true;
                 }
+            }else{
+                preserve[i] = true;
             }
         }
-        while (!stack.isEmpty()) {
-            remove[stack.pop()] = 1; // Mark unmatched '(' for removal
-        }
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            if (remove[i] == 0) {
-                result.append(s.charAt(i)); // Append only valid characters
+        StringBuilder ans = new StringBuilder();
+        for(int i = 0; i < s.length(); i++){
+            if(preserve[i]){
+                ans.append(s.charAt(i));
             }
         }
-        return result.toString();
+        return ans.toString();
 
     }
 }
