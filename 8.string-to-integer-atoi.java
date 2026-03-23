@@ -7,7 +7,7 @@
 // @lc code=start
 class Solution {
     public int myAtoi(String s) {
-        s = s.trim();
+        s = s.trim(); // remove the leading and ending zeros
         if (s.isEmpty()) return 0;
 
         int sign = 1;
