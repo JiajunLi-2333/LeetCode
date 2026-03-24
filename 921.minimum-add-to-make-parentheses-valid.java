@@ -3,21 +3,32 @@
  *
  * [921] Minimum Add to Make Parentheses Valid
  */
-import java.util.Stack;
-// @lc code=start
 class Solution {
     public int minAddToMakeValid(String s) {
-        // if ( then it should enter the stack directly
-        // if ) then check the top of the stack to see if it can be removed
-        Stack<Character> res = new Stack<>();
-        for(char c: s.toCharArray()){
-            if(!res.isEmpty() && res.peek() == '(' && c == ')'){
-                res.pop();
-            }else {
-                res.push(c);
+        // Deque<Character> stack = new ArrayDeque<>();
+        // for(char c : s.toCharArray()){
+        //     if(c == '('){
+        //         stack.push(c);
+        //     }else{
+        //         if(!stack.isEmpty() && stack.peek() == '('){
+        //             stack.pop();
+        //         }
+        //         else{
+        //             stack.push(c);
+        //         }
+        //     }
+        // }
+        // return stack.size();
+        int cnt = 0, ans = 0;
+        for(char c : s.toCharArray()){
+            cnt += c == '(' ? 1 : -1;
+            if(cnt < 0){
+                cnt = 0;
+                ans++;
             }
         }
-        return res.size();
+        return ans + cnt;
+
 
     }
 }

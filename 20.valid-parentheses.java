@@ -3,19 +3,27 @@
  *
  * [20] Valid Parentheses
  */
-import java.util.Stack;
-import java.util.List;
+import java.util.*;
 // @lc code=start
 class Solution {
     public boolean isValid(String s) {
-        Stack<Character> ans = new Stack<>();
-        List<Integer> sumlist = List.of(81,184,248);
-        for(char c: s.toCharArray()){
-            if(!ans.isEmpty() && sumlist.indexOf((int) (ans.peek() + c)) != -1 && (int) c > (int) ans.peek()){
-                ans.pop();
-            }else ans.push(c);
+        Deque<Character> stack = new ArrayDeque<>();
+        for(char c : s.toCharArray()){
+            if(c == '(' || c == '[' || c == '{'){
+                stack.push(c);
+            }
+            else{
+                if(!stack.isEmpty()){
+                    if(c == ')' && stack.peek() == '(') stack.pop();
+                    else if(c == ']' && stack.peek() == '[') stack.pop(); 
+                    else if(c == '}' && stack.peek() == '{') stack.pop();
+                    else stack.push(c);
+                }else{
+                    stack.push(c);
+                }
+            }
         }
-        return ans.isEmpty();
+        return stack.isEmpty();
     }
 }
 // @lc code=end
