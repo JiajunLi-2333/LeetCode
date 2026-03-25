@@ -3,25 +3,41 @@
  *
  * [901] Online Stock Span
  */
+/*
+Clarify:
+For every i, we need to find j st j < i and nums[j] > nums[i]
+
+Brutal:
+Initialize a num array, for every new price, iterate to the right to find the bigger element. tc O(n^2) sc O(n)
+
+Bottleneck:
+We are look for the next greater element each time, so it is better if we can have some context memory that records the element for us
+
+Optimize:
+use a Dec stack and store int[price, span] for good.
+
+Keyword: next greater element + dynamically maintaining -> monotonic stack && the use of stack
+*/
+
 import java.util.*;
 // @lc code=start
 class StockSpanner {
-
-    private Deque<int[]> stack = new ArrayDeque<>();
-    private int cur = -1;
+    Deque<int[]> stack;
     public StockSpanner() {
-        stack.push(new int[]{-1, Integer.MAX_VALUE});
+        this.stack = new ArrayDeque<>();
     }
     
     public int next(int price) {
-        while(price >= stack.peek()[1]){
-            stack.pop();
-        }
-
-        cur++; 
-        int ans = cur - stack.peek()[0];
-        stack.push(new int[]{cur, price});
-        return ans;
+       if(stack.isEmpty()){
+        stack.push(new int[]{price,1});
+        return stack.peek()[1];
+       }
+       int span = 1;
+       while(!stack.isEmpty() && stack.peek()[0] <= price){
+        span += stack.pop()[1];
+       }
+       stack.push(new int[]{price,span});
+       return span;
     }
 }
 

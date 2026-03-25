@@ -3,26 +3,38 @@
  *
  * [853] Car Fleet
  */
-
+import java.util.*;
 // @lc code=start
 class Solution {
 	public int carFleet(int target, int[] position, int[] speed) {
-		int len = position.length;
-		int[][] infos = new int[len][2];
-		for (int i = 0; i < len; i++) {
-			infos[i][0] = position[i];
-			infos[i][1] = speed[i];
-		}
-		Arrays.sort(infos, (a, b) -> b[0] - a[0]);
-		double arrival = Integer.MIN_VALUE;
+		if(position.length == 1) return 1; 
 		int ans = 0;
-		for (int i = 0; i < len; i++) {
-			int[] info = infos[i];
-			double cur = (double)(target - info[0]) / info[1];
-			if (cur > arrival) {
-				ans += 1;
-				arrival = cur;
+		Deque<int[]> stack = new ArrayDeque<>();
+		Map<Integer, Integer> map = new HashMap<>();
+		for(int i = 0; i < position.length; i++){
+			map.put(position[i], speed[i]);
+		}
+		Arrays.sort(position);
+		for(int i = position.length - 1 ; i >= 0; i--){
+			int currSpeed = map.get(position[i]);
+			double currTime = (double)(target - position[i]) / currSpeed;
+
+			if(stack.isEmpty()){
+				stack.push(new int[]{currSpeed, position[i]});
+				ans++;
+				continue;
 			}
+
+			int topSpeed = stack.peek()[0];
+			int topPos   = stack.peek()[1];
+			double topTime = (double)(target - topPos) / topSpeed;
+
+			if(currTime > topTime){
+				// 追不上前方车队，自成一队
+				stack.push(new int[]{currSpeed, position[i]});
+				ans++;
+			}
+			// 否则追得上，合并进前方车队，不入栈
 		}
 		return ans;
 	}
