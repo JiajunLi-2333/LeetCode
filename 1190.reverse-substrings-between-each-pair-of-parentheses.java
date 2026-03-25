@@ -3,31 +3,38 @@
  *
  * [1190] Reverse Substrings Between Each Pair of Parentheses
  */
-import java.util.Stack;
+import java.util.*;
 // @lc code=start
 class Solution {
     public String reverseParentheses(String s) {
-        //use a StringBuilder to reverse the string and simulate the stack process
-        //use a stack to store the index of each left parenthesis
-        Stack<Integer> indexStack = new Stack<>();
-        StringBuilder sb = new StringBuilder();
-        char[] c = s.toCharArray();
-        for(int i = 0; i < c.length; i++){
-
-            //record the index of each of the ( parenthesis
-            if(c[i] == '('){
-                indexStack.push(sb.length());
+        int n = s.length();
+        int[] pair = new int[n];
+        Deque<Integer> stack = new ArrayDeque<>();
+        
+        // 预处理：建立括号配对关系
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else if (s.charAt(i) == ')') {
+                int j = stack.pop();
+                pair[i] = j;
+                pair[j] = i;
             }
-            else if(c[i] == ')'){
-                int startIndex = indexStack.pop();
-                int endIndex = sb.length();
-                sb.replace(startIndex, endIndex, new StringBuilder(sb.substring(startIndex, endIndex)).reverse().toString());
-
-            }else{
-                sb.append(c[i]);
-            }
-
         }
+        
+        // 虫洞穿越
+        StringBuilder sb = new StringBuilder();
+        int i = 0, dir = 1; // dir = 1 向右, dir = -1 向左
+        while (i >= 0 && i < n) {
+            if (s.charAt(i) == '(' || s.charAt(i) == ')') {
+                i = pair[i]; // 跳到配对括号
+                dir = -dir;  // 反转方向
+            } else {
+                sb.append(s.charAt(i));
+            }
+            i += dir;
+        }
+        
         return sb.toString();
     }
 }
