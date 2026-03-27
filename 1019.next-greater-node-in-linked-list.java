@@ -3,8 +3,14 @@
  *
  * [1019] Next Greater Node In Linked List
  */
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
+
+/*
+Optimize:
+the monotonic stack can maintain two things:
+Optimize: 1. from left to right, the stack maintains the candidate, the ones who has not yet found the next greater element. 
+Optimize: 2. from right to left, the stack maintains the next greater element.
+*/
 // @lc code=start
 /**
  * Definition for singly-linked list.
@@ -16,27 +22,45 @@ import java.util.Stack;
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
+import java.util.*;
 class Solution {
+    private final Deque<Integer> stack = new ArrayDeque<>();
+    private int[] ans;
     public int[] nextLargerNodes(ListNode head) {
-        Stack<int[]> stack = new Stack<>();
-        int idx = 0, n = 0;
-        ListNode cur = head;
-        while (cur != null) {
-            n++;
-            cur = cur.next;
+        // List<Integer> nums = new ArrayList<>();
+        // while(head != null){
+        //     nums.add(head.val);
+        //     head = head.next;
+        // }
+        // Deque<Integer> stack = new ArrayDeque<>();
+        // int[] ans = new int[nums.size()];
+        // Arrays.fill(ans, 0);
+        // for(int i = 0; i < nums.size();i++){
+        //     while(!stack.isEmpty() && nums.get(i) > nums.get(stack.peek())){
+        //         int j = stack.pop();
+        //         ans[j] = nums.get(i);
+        //     }
+        //     stack.push(i);
+        // }
+        // return ans;
+        recur(head, 0);
+        return ans;
+    }
+    //TODO Faster recursion
+    private void recur(ListNode head, int i){
+        if(head == null){
+            ans = new int[i];
+            return; 
         }
-        int[] ans = new int[n];
-        cur = head;
-        while(cur != null){
-            while(!stack.isEmpty() && stack.peek()[0] < cur.val){
-                int[] top = stack.pop();
-                ans[top[1]] = cur.val;
-            }
-            stack.push(new int[] {cur.val, idx});
-            idx++;
-            cur = cur.next;
+        recur(head.next, i + 1);
+        while(!stack.isEmpty() && stack.peek() <= head.val){
+            stack.pop();
         }
-        return ans;        
+        if(!stack.isEmpty()){
+            ans[i] = stack.peek();
+        }
+        stack.push(head.val);
+
     }
 }
 // @lc code=end
