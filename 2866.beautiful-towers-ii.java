@@ -3,46 +3,41 @@
  *
  * [2866] Beautiful Towers II
  */
-import java.util.Stack;
+import java.util.*;
 // @lc code=start
 class Solution {
     public long maximumSumOfHeights(List<Integer> maxHeights) {
-        //convert list to array for easier manipulation
-        int[] maxH = maxHeights.stream().mapToInt(i -> i).toArray();
-        int n = maxH.length;
+        int[] a = maxHeights.stream().mapToInt(i -> i).toArray();
+        int n = a.length;
+        long[] suf = new long[n + 1];
+        var st = new ArrayDeque<Integer>();
+        st.push(n); // 哨兵
         long sum = 0;
-
-        //Define suffix as the max sum of heights from i to n -1
-        long[] suffix = new long[n + 1];
-        Stack<Integer> stack = new Stack<>();
-        stack.push(n);
-        //! need monotonic stack to calculate the max sum of heights as suffix
-        for(int i = n -1; i >= 0; i--){
-            int x = maxH[i];
-            while(stack.size() > 1 && maxH[stack.peek()] >= x){
-                int j = stack.pop();
-                sum -= (long) maxH[j] * (stack.peek() - j);
+        for (int i = n - 1; i >= 0; i--) {
+            int x = a[i];
+            while (st.size() > 1 && x <= a[st.peek()]) {
+                int j = st.pop();
+                sum -= (long) a[j] * (st.peek() - j); // 撤销之前加到 sum 中的
             }
-            sum += (long) x * (stack.peek() - i);
-            suffix[i] = sum;
-            stack.push(i);
+            sum += (long) x * (st.peek() - i); // 从 i 到 st.peek()-1 都是 x
+            suf[i] = sum;
+            st.push(i);
         }
 
         long ans = sum;
-        stack.clear();
-        stack.push(-1);
-        sum = 0;
-        for(int i = 0; i < n; i++){
-            int x = maxH[i];
-            while(stack.size() > 1 && maxH[stack.peek()] >= x){
-                int j = stack.pop();
-                sum -= (long) maxH[j] * (j - stack.peek());
+        st.clear();
+        st.push(-1); // 哨兵
+        long pre = 0;
+        for (int i = 0; i < n; i++) {
+            int x = a[i];
+            while (st.size() > 1 && x <= a[st.peek()]) {
+                int j = st.pop();
+                pre -= (long) a[j] * (j - st.peek()); // 撤销之前加到 pre 中的
             }
-            sum += (long) x * (i - stack.peek());
-            ans = Math.max(ans, sum + suffix[i + 1]);
-            stack.push(i);
+            pre += (long) x * (i - st.peek()); // 从 st.peek()+1 到 i 都是 x
+            ans = Math.max(ans, pre + suf[i + 1]);
+            st.push(i);
         }
-
         return ans;
     }
 }
