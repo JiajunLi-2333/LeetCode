@@ -21,6 +21,21 @@ class Solution {
         }
         return ans;     
     }
+
+    //? answer to the modified google question
+    // Deque<Integer> stack = new ArrayDeque<>();
+    // int n = heights.length;
+    // int[] ans = new int[n];
+    // for(int i = n - 1; i >= 0; i--){
+    //     int height = heights[i];
+    //     while(!stack.isEmpty() && height > heights[stack.peek()]){
+    //         stack.pop();
+    //         ans[i]++;
+    //     }
+    //     ans[i] += stack.size();
+    //     stack.push(i);
+    // }
+    // return ans;
 }
 // @lc code=end
 
