@@ -3,22 +3,20 @@
  *
  * [1962] Remove Stones to Minimize the Total
  */
-import java.util.PriorityQueue;
+import java.util.*;
 // @lc code=start
 class Solution {
     public int minStoneSum(int[] piles, int k) {
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
         int ans = 0;
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        for (int pile : piles) {
-            pq.offer(pile);
+        for(int num : piles){
+            maxHeap.offer(num);
+            ans += num;
         }
-        while(k-- > 0 && !pq.isEmpty()){
-            int max = pq.poll();
-            int reduced = (int) Math.ceil(max / 2.0);
-            pq.offer(reduced);
-        }
-        while(!pq.isEmpty()){
-            ans += pq.poll();
+        for(int i = 0; i < k; i++){
+            int val = maxHeap.poll();
+            ans -= val/2; 
+            maxHeap.offer(val - val / 2);
         }
         return ans;
     }
