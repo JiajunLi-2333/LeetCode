@@ -3,7 +3,6 @@
  *
  * [1021] Remove Outermost Parentheses
  */
-import java.util.*;
 
 /*
 Clarify: 
@@ -32,19 +31,34 @@ class Solution {
         return sb.toString(); */
 
         //TODO Stack Solution
-        Deque<Character> stack = new ArrayDeque<>();
-        StringBuilder ans = new StringBuilder(); 
-        for(char c : s.toCharArray()){
-            if(c == '('){
-                if(!stack.isEmpty()){
-                    ans.append(c);
-                }
-                stack.push(c);
-            }else{
-                stack.pop();
-                if(!stack.isEmpty()){
-                    ans.append(c);
-                }
+        // Deque<Character> stack = new ArrayDeque<>();
+        // StringBuilder ans = new StringBuilder(); 
+        // for(char c : s.toCharArray()){
+        //     if(c == '('){
+        //         if(!stack.isEmpty()){
+        //             ans.append(c);
+        //         }
+        //         stack.push(c);
+        //     }else{
+        //         stack.pop();
+        //         if(!stack.isEmpty()){
+        //             ans.append(c);
+        //         }
+        //     }
+        // }
+        // return ans.toString();
+
+        //TODO Solve by counter, the nature of VPS
+        int score = 0, n = s.length();
+        char[] c = s.toCharArray();
+        StringBuilder ans = new StringBuilder();
+        for(int i = 0; i < n; i++){
+            score += c[i] == '(' ? 1 : -1;
+            if(c[i] == '(' && score > 1){
+                ans.append(c[i]);
+            }
+            else if(c[i] == ')' && score > 0 ){
+                ans.append(c[i]);
             }
         }
         return ans.toString();
