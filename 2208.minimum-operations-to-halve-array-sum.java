@@ -3,25 +3,21 @@
  *
  * [2208] Minimum Operations to Halve Array Sum
  */
-import java.util.PriorityQueue;
+import java.util.*;
 // @lc code=start
 class Solution {
     public int halveArray(int[] nums) {
-        PriorityQueue<Double> pq =  new PriorityQueue<>((a, b) -> Double.compare(b, a));
-        double sum = 0;
-        for(int num : nums){
-            pq.offer(num * 1.0);
-            sum += num;
-        }
-        int ans = 0;
-        double target = sum / 2;
-        while(sum > target){
-            double max = pq.poll();
-            sum -= max / 2;
-            pq.offer(max / 2);
+        PriorityQueue<Double> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        double sum = 0, ans = 0;
+        for(int num : nums){sum += num; maxHeap.offer((double) num);}
+        double half = (double) sum / 2;
+        while(half > 0){
+            double num = maxHeap.poll();
+            half -= num / 2;
             ans++;
+            maxHeap.offer(num/2);
         }
-        return ans;
+        return (int) ans; 
     }
 }
 // @lc code=end
