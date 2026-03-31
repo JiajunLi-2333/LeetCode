@@ -3,20 +3,21 @@
  *
  * [2406] Divide Intervals Into Minimum Number of Groups
  */
-import java.util.Arrays;
-import java.util.PriorityQueue;
+import java.util.*;
 // @lc code=start
 class Solution {
     public int minGroups(int[][] intervals) {
-        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        for(int[] interval: intervals){
-            if(!pq.isEmpty() && pq.peek() < interval[0]){
-                pq.poll(); // Remove the group that ends before the current interval starts
+        //sort the array according to left
+        Arrays.sort(intervals, (a, b) -> Integer.compare(a[0],b[0]));
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for(int[] interval : intervals){
+            int left = interval[0], right = interval[1];
+            if(!minHeap.isEmpty() && minHeap.peek() < left){
+                minHeap.poll();
             }
-            pq.offer(interval[1]); // Add the current interval's end time to the group
+            minHeap.offer(right);
         }
-        return pq.size();
+        return minHeap.size();
     }
 }
 // @lc code=end

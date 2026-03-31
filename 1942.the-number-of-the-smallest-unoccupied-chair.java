@@ -4,51 +4,41 @@
  * [1942] The Number of the Smallest Unoccupied Chair
  */
 
-import java.util.PriorityQueue;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 // @lc code=start
 class Solution {
     public int smallestChair(int[][] times, int targetFriend) {
-        //! 只能放在同一时间线上去进行事件标记
-        // Create events for arrivals and departures
-        List<int[]> events = new ArrayList<>();
-        for (int i = 0; i < times.length; i++) {
-            events.add(new int[]{times[i][0], 1, i}); // arrival: time, type=1, friend_id
-            events.add(new int[]{times[i][1], 0, i}); // departure: time, type=0, friend_id
+        int n = times.length;   
+
+        Integer[] sorted = new Integer[n];
+        for(int i = 0; i < n; i++){
+            sorted[i] = i;
         }
-        
-        // Sort events: first by time, then departures before arrivals
-        events.sort((a, b) -> {
-            if (a[0] != b[0]) return Integer.compare(a[0], b[0]);
-            return Integer.compare(a[1], b[1]); // 0 (departure) comes before 1 (arrival)
-        });
-        
-        PriorityQueue<Integer> availableChairs = new PriorityQueue<>();
-        for (int i = 0; i < times.length; i++) {
-            availableChairs.offer(i);
+        Arrays.sort(sorted, (a, b) -> Integer.compare(times[a][0], times[b][0]));
+
+
+        PriorityQueue<Integer> available = new PriorityQueue<>();
+        for(int i = 0; i < n; i++){
+            available.offer(i);
         }
-        
-        int[] friendToChair = new int[times.length];
-        
-        for (int[] event : events) {
-            int type = event[1];
-            int friendId = event[2];
+
+        //[leaving time, seat index number]
+        PriorityQueue<int[]> occupied = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+
+        for(int i : sorted){
+            int arrival = times[i][0];
+            int leave = times[i][1];
             
-            if (type == 0) { // departure
-                availableChairs.offer(friendToChair[friendId]);
-            } else { // arrival
-                int chair = availableChairs.poll();
-                friendToChair[friendId] = chair;
-                
-                // If this is our target friend, return the chair
-                if (friendId == targetFriend) {
-                    return chair;
-                }
+            while(!occupied.isEmpty() && occupied.peek()[0] <= arrival){
+                int[] top = occupied.poll();
+                available.offer(top[1]);
             }
+            
+            int seat = available.poll();
+            if(i == targetFriend) return seat;
+            occupied.offer(new int[]{leave, seat});
         }
-        
-        return -1; // Should never reach here
+        return -1;
     }
 }
 // @lc code=end
