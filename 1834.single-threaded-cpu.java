@@ -3,49 +3,41 @@
  *
  * [1834] Single-Threaded CPU
  */
-import java.util.PriorityQueue;
-import java.util.Arrays;
+import java.util.*;
 // @lc code=start
 class Solution {
     public int[] getOrder(int[][] tasks) {
-        //use priority queue to schedule tasks and simulate the CPU processing
         int n = tasks.length;
-        int[][] indexedTasks = new int[n][3];
-        for(int i = 0; i < n; i++){
-            indexedTasks[i][0] = tasks[i][0]; // enqueue time
-            indexedTasks[i][1] = tasks[i][1]; // processing time
-            indexedTasks[i][2] = i; // original index
-        }
+        Integer[] idx = new Integer[n];
+        for (int i = 0; i < n; i++) idx[i] = i;
+        Arrays.sort(idx, (a, b) -> Integer.compare(tasks[a][0], tasks[b][0]));
 
-        //Sort tasks by enqueue time
-        Arrays.sort(indexedTasks, (a, b) -> a[0] - b[0]);
-        //Store processing time and original index in a priority queue
-        //store accroding to the processing time, if processing time is same, then store according to the original index  Min-heap
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> {
-            if(a[0] == b[0]){
-                return a[1] - b[1]; // if processing time is same, sort by original index
-            }
-            return a[0] - b[0]; // sort by processing time
-        });
+        // [processingTime, originalIndex]
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) ->
+            a[0] != b[0] ? Integer.compare(a[0], b[0]) : Integer.compare(a[1], b[1])
+        );
 
         int[] ans = new int[n];
-        int time = indexedTasks[0][0]; // start time
-        
-        int i = 0, j = 0;
+        int ansIdx = 0;
+        int i = 0;          // 指向 sorted tasks
+        long time = 0;      // 当前时间
 
-        //! very important logic loop here
-        while(i < n){
-            while(j < n && indexedTasks[j][0] <= time){
-                pq.offer(new int[]{indexedTasks[j][1], indexedTasks[j][2]});
-                j++;
+        while (ansIdx < n) {
+            // 把所有 enqueueTime <= time 的任务入堆
+            while (i < n && tasks[idx[i]][0] <= time) {
+                pq.offer(new int[]{tasks[idx[i]][1], idx[i]});
+                i++;
             }
-            if(pq.isEmpty()){
-                time = indexedTasks[j][0];
-            }else{
-                int[] curr = pq.poll();
-                ans[i++] = curr[1];
-                time += curr[0];
+
+            if (pq.isEmpty()) {
+                // 堆空但还有任务没到，直接跳到下一个任务的到达时间
+                time = tasks[idx[i]][0];
+                continue;
             }
+
+            int[] cur = pq.poll();
+            ans[ansIdx++] = cur[1];
+            time += cur[0];
         }
 
         return ans;

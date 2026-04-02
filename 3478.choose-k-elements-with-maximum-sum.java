@@ -3,40 +3,37 @@
  *
  * [3478] Choose K Elements With Maximum Sum
  */
-import java.util.PriorityQueue;
-import java.util.Arrays;
+import java.util.*;
 // @lc code=start
 class Solution {
     public long[] findMaxSum(int[] nums1, int[] nums2, int k) {
-        PriorityQueue<Integer> pq = new PriorityQueue<>();
-        int[][] triples = new int[nums1.length][3];
 
-        //Form in the form of {num1, num2, index} for sorting
-        for(int i = 0; i < nums1.length; i++){
-            triples[i][0] = nums1[i];
-            triples[i][1] = nums2[i];
-            triples[i][2] = i;
+        //TODO construct the sorted array
+        int n = nums1.length;
+        Integer[] sorted = new Integer[n];
+        for(int i = 0; i < n;i++){
+            sorted[i] = i;
         }
-        Arrays.sort(triples, (a, b) -> a[0] - b[0]);
-        long[] ans = new long[nums1.length];
-        long sum = 0;
+        Arrays.sort(sorted, (a,b) -> Integer.compare(nums1[a], nums1[b]));
 
-        for(int i = 0; i < nums1.length; i++){
-            //avoid the duplicate elements
-            int targetIndex = triples[i][2];
-            if(i > 0 && triples[i][0] == triples[i - 1][0]){
-                //If the current number is same as the previous one, we can only choose one of them
-                ans[targetIndex] = ans[triples[i - 1][2]];
+        //TODO MinHeap with length n: 0 <= n <= k;
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        long sum  = 0;
+        long[] ans = new long[n];
+
+        for(int i = 0; i < n;){
+            int start = i;
+            while(i < n && nums1[sorted[i]] == nums1[sorted[start]]){
+                ans[sorted[i]] = sum;
+                i++;
             }
-            else{
-                //Otherwise, we can choose the maximum sum from the previous elements
-                ans[targetIndex] = sum;
-            }
-            int cur = triples[i][1];
-            pq.offer(cur);
-            sum += cur;
-            if(pq.size() > k){
-                sum -= pq.poll();
+            for(int j = start; j < i; j++){
+                minHeap.offer(nums2[sorted[j]]);
+                sum += nums2[sorted[j]];
+                if(minHeap.size() > k){
+                    sum -= minHeap.poll();
+                }
             }
         }
         return ans;

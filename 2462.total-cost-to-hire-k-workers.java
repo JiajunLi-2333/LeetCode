@@ -3,53 +3,50 @@
  *
  * [2462] Total Cost to Hire K Workers
  */
-import java.util.Arrays;
-import java.util.PriorityQueue;
+import java.util.*;
 // @lc code=start
 class Solution {
     public long totalCost(int[] costs, int k, int candidates) {
-        //This question can be solved using two min-heaps
-        int n = costs.length;
-        PriorityQueue<Integer> front = new PriorityQueue<>();
-        PriorityQueue<Integer> back = new PriorityQueue<>();
+
+        //two minHeap
+        PriorityQueue<Integer> forward = new PriorityQueue<>();
+        PriorityQueue<Integer> backward = new PriorityQueue<>();
+        int n = costs.length, left = 0, right = n -1;
         long ans = 0;
-        //! Important Edge Case
-        if(candidates * 2 + k > n){
-            Arrays.sort(costs);
-            for(int i = 0; i < k; i++){
-                ans += costs[i];
+        //! special case 2 * candidates >= n
+        if(2 * candidates >= n){
+            PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+            for(int cost : costs){minHeap.offer(cost);}
+            long res = 0;
+            while(k-- > 0){
+                res += minHeap.poll();
             }
-            return ans;
+            return res;
         }
 
-        //populate the heaps with candidates
+
+        //! General Case
         for(int i = 0; i < candidates; i++){
-            front.offer(costs[i]);
-            back.offer(costs[n-1-i]);
+            forward.offer(costs[i]);left++;
+            backward.offer(costs[n - i - 1]);right--;
         }
 
-        int frontIndex = candidates;
-        int backIndex = n - candidates - 1;
-        while(k-- > 0){
-            if(front.peek() <= back.peek()){
-                ans += front.poll();
-                front.offer(costs[frontIndex++]);
+        while(k > 0){
+            if(backward.isEmpty() || (!forward.isEmpty() && forward.peek() <= backward.peek())){
+                ans += forward.poll();
+                if(left <= right) forward.offer(costs[left++]);
+            } else {
+                ans += backward.poll();
+                if(left <= right) backward.offer(costs[right--]);
             }
-            else{
-                ans += back.poll();
-                back.offer(costs[backIndex--]);
-            }
+            k--;
         }
         return ans;
-
-
+    }
+}
 
 
 // @lc code=start
-class Solution {
-    public long totalCost(int[] costs, int k, int candidates) {
-        
-    }
-}
+
 // @lc code=end
 

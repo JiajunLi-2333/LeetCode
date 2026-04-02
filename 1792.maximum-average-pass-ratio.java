@@ -3,41 +3,33 @@
  *
  * [1792] Maximum Average Pass Ratio
  */
-import java.util.PriorityQueue;
+import java.util.*;
 // @lc code=start
 class Solution {
-    /**
-     * @param classes
-     * @param extraStudents
-     * @return
-     */
     public double maxAverageRatio(int[][] classes, int extraStudents) {
-        // The key is about the maximum increase in average pass ratio by adding one student to the class
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> {
-            double diffA = increaseAmount(a);
-            double diffB = increaseAmount(b);
-            return Double.compare(diffB, diffA);
-        });
-        for(int[] cls : classes){
-            pq.offer(cls);
+        double ans = 0, n = classes.length;
+        //? [increase amount to result, class index]
+        PriorityQueue<double[]> maxHeap = new PriorityQueue<>((a, b) -> Double.compare(b[0],a[0]));
+        int i = 0;
+        for(int[] room : classes){
+            double pass = room[0];
+            double total = room[1];
+            double[] insert = new double[]{(total - pass)/(total * (total + 1)), i++};
+            maxHeap.offer(insert);
         }
         while(extraStudents-- > 0){
-            int[] cls = pq.poll();
-            cls[0]++; 
-            cls[1]++; 
-            pq.offer(cls); 
+            double[] top = maxHeap.poll();
+            int index = (int) top[1];
+            classes[index][0]++;
+            classes[index][1]++;
+            double pass = classes[index][0];
+            double total = classes[index][1];
+            maxHeap.offer(new double[]{(total - pass)/(total * (total + 1)), index});
         }
-        double ans = 0;
-        while(!pq.isEmpty()){
-            int[] cls = pq.poll();
-            ans += (double) cls[0] / cls[1]; 
+        for(int[] room : classes){
+            ans += (double) room[0] / room[1];
         }
-        return ans / classes.length; 
-    }
-    private double increaseAmount(int[] cls){
-        int x = cls[0];
-        int y = cls[1];
-        return (double) (x + 1) / (y + 1) - (double) x / y;
+        return ans/n;
     }
 }
 // @lc code=end
