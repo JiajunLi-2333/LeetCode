@@ -3,31 +3,27 @@
  *
  * [1705] Maximum Number of Eaten Apples
  */
-import java.util.PriorityQueue;
+import java.util.*;
 // @lc code=start
 class Solution {
     public int eatenApples(int[] apples, int[] days) {
-        PriorityQueue<int[]> pq =  new PriorityQueue<>((a, b) -> a[0] - b[0]);
-        int n = apples.length, ans = 0, day = 0, i = 0;
-        while(i < n || !pq.isEmpty()){
-            if(i < n && apples[i] > 0){
-                pq.offer(new int[]{day + days[i], apples[i]});
+       int ans = 0;
+       PriorityQueue<int[]> minHeap = new PriorityQueue<>((a,b) -> a[0] - b[0]);
+       for(int i = 0; i < apples.length || !minHeap.isEmpty(); i++){
+            while(!minHeap.isEmpty() && minHeap.peek()[0] == i){
+                minHeap.poll();
             }
-            while(!pq.isEmpty() && (pq.peek()[0] <= day || pq.peek()[1] <= 0)){
-                pq.poll();
+            if(i < apples.length && apples[i] > 0){
+                minHeap.offer(new int[]{i + days[i], apples[i]});
             }
-            if(!pq.isEmpty()){
-                int[] top = pq.poll();
+            if(!minHeap.isEmpty()){
                 ans++;
-                top[1]--;
-                if(top[1] > 0){
-                    pq.offer(top);
+                if(--minHeap.peek()[1] == 0){
+                    minHeap.poll();
                 }
             }
-            day++;
-            i++;
-        }
-        return ans; 
+       }
+       return ans;
     }    
 }
 // @lc code=end
