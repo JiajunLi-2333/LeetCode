@@ -7,34 +7,28 @@ import java.util.*;
 // @lc code=start
 class Solution {
     public double mincostToHireWorkers(int[] quality, int[] wage, int k) {
-        int n = quality.length;
-        Integer[] id = new Integer[n];
-        Arrays.setAll(id, i -> i);
-        // 按照 r 值排序
-        Arrays.sort(id, (i, j) -> wage[i] * quality[j] - wage[j] * quality[i]);
+       int n = quality.length;
+       Integer[] idx = new Integer[n];
+       Arrays.setAll(idx, i -> i);
+       Arrays.sort(idx, (i, j) -> wage[i] * quality[j] - wage[j] * quality[i]);
 
-        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b - a);
-        int sumQ = 0;
-        for (int i = 0; i < k; i++) {
-            pq.offer(quality[id[i]]);
-            sumQ += quality[id[i]];
-        }
+       PriorityQueue<Integer> maxHeap = new PriorityQueue<>((a,b) -> b -a);
 
-        // 选 r 值最小的 k 名工人
-        double ans = sumQ * ((double) wage[id[k - 1]] / quality[id[k - 1]]);
-
-        // 后面的工人 r 值更大
-        // 但是 sumQ 可以变小，从而可能得到更优的答案
-        for (int i = k; i < n; i++) {
-            int q = quality[id[i]];
-            if (q < pq.peek()) {
-                sumQ -= pq.poll() - q;
-                pq.offer(q);
-                ans = Math.min(ans, sumQ * ((double) wage[id[i]] / q));
+       int sumQuality = 0;
+       for(int i = 0; i < k; i++){
+            maxHeap.offer(quality[idx[i]]);
+            sumQuality += quality[idx[i]];
+       }
+       double ans = sumQuality * ((double) wage[idx[k - 1]] / quality[idx[k - 1]]);
+       for(int i = k; i < n; i++){
+            int q = quality[idx[i]];
+            if(q < maxHeap.peek()){
+                sumQuality -= maxHeap.poll() - q;
+                maxHeap.offer(q);
+                ans = Math.min(ans, sumQuality * ((double) wage[idx[i]] / q));
             }
-        }
-        return ans;
-        
+       }
+       return ans;
     }
 }
 // @lc code=end
