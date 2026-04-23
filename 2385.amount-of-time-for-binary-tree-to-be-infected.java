@@ -3,8 +3,6 @@
  *
  * [2385] Amount of Time for Binary Tree to Be Infected
  */
-import java.util.*;
-// @lc code=start
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -47,36 +45,28 @@ class Solution {
     //     return new int[]{Math.max(leftLen, rightLen) + 1, 0};
 
     // }
-    private TreeNode startNode;
-    private final Map<TreeNode, TreeNode> map = new HashMap<>();
+    private int ans = 0;
     public int amountOfTime(TreeNode root, int start){
-        dfs(root, null, start);
-        return maxDepth(startNode, startNode);
+        dfs(root, start);
+        return ans;
     }
-    private void dfs(TreeNode root, TreeNode from, int start){
-        if(root == null)return;
-        map.put(root, from);
+    private int[] dfs(TreeNode root, int start){
+        if(root == null) return new int[]{0,0};
+        int[] left = dfs(root.left, start);
+        int[] right = dfs(root.right, start);
+        int leftLen = left[0], leftFound = left[1];
+        int rightLen = right[0], rightFound = right[1];
+
         if(root.val == start){
-            startNode = root;
-        } 
-        dfs(root.left, root, start);
-        dfs(root.right, root, start);
-    }
-    private int maxDepth(TreeNode node, TreeNode from){
-        if(node == null){
-            return -1; 
+            ans = Math.max(ans, Math.max(leftLen,rightLen));
+            return new int[]{1,1};
         }
-        int res = -1;
-        if(node.left != from){
-            res = Math.max(res, maxDepth(node.left, node));
+        if(leftFound == 1 || rightFound == 1){
+            ans = Math.max(ans, leftLen + rightLen);
+            return new int[]{(leftFound == 1 ? leftLen : rightLen) + 1, 1};
         }
-        if(node.right != from){
-            res = Math.max(res, maxDepth(node.right, node));
-        }
-        if(map.get(node) != from){
-            res = Math.max(res, maxDepth(map.get(node), node));
-        }
-        return res + 1;
+        return new int[]{Math.max(leftLen, rightLen)+ 1,0};
+
     }
 }
 // @lc code=end

@@ -21,14 +21,26 @@
  * }
  */
 class Solution {
+    private int limit;
     public TreeNode sufficientSubset(TreeNode root, int limit) {
-        if(root == null) return null;
-        if(root.left == null && root.right == null){
-            return root.val < limit ? null : root;
+       this.limit = limit;
+       return dfs(root, 0);
+    }
+    private TreeNode dfs(TreeNode root, int sum){
+        if(root == null){
+            return null;
         }
-        root.left = sufficientSubset(root.left, limit - root.val);
-        root.right = sufficientSubset(root.right, limit - root.val);
-        return root.left == null && root.right == null ? null : root;
+        sum += root.val;
+        boolean isLeaf = (root.left == null && root.right == null);
+        root.left = dfs(root.left, sum );
+        root.right = dfs(root.right, sum);
+        if(isLeaf){
+            return sum >= limit ? root : null;
+        }
+        if(root.left == null && root.right == null){
+            return null;
+        }
+        return root;
     }
 }
 // @lc code=end
