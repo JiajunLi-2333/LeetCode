@@ -21,26 +21,41 @@
  * }
  */
 class Solution {
-    private boolean ans = false;
+    private int height = 0;
+    private boolean found = false;
+    private TreeNode subRoot;
     public boolean isSubtree(TreeNode root, TreeNode subRoot) {
-        dfs(root,subRoot);
-        return ans;
+        getHeight(subRoot,0);
+        this.subRoot = subRoot;
+        dfs(root);
+        return found;
+
+
     }
-    private void dfs(TreeNode p, TreeNode q){
-        if(p == null || ans) return;
-        if(isSameTree(p, q)){
-            ans = true;
+    private int dfs(TreeNode root){
+        if(root == null || found) return 0;
+        int leftHeight = dfs(root.left);
+        int rightHeight = dfs(root.right);
+        int curHeight = Math.max(leftHeight, rightHeight) + 1;
+        if(curHeight == height && isSameTree(root, subRoot)){
+            found = true;
+        }
+        return curHeight; 
+    } 
+
+    private void getHeight(TreeNode root,int Height){
+        if(root == null){
+            height = Math.max(height, Height);
             return;
         }
-        dfs(p.left, q);
-        dfs(p.right, q);
+        getHeight(root.left, Height +1);
+        getHeight(root.right, Height + 1);
     }
-
-    private boolean isSameTree(TreeNode p, TreeNode q){
-        if(p == null || q == null){
-            return p == q;
-        }
-        return p.val == q.val && isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    private boolean isSameTree(TreeNode nodeOne, TreeNode nodeTwo){
+        if(nodeOne == null && nodeTwo == null) return true;
+        if(nodeOne == null || nodeTwo == null) return false;
+        if(nodeOne.val != nodeTwo.val)return false;
+        return isSameTree(nodeOne.left, nodeTwo.left) && isSameTree(nodeOne.right, nodeTwo.right); 
     }
 }
 // @lc code=end

@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=865 lang=java
+ * @lc app=leetcode id=538 lang=java
  *
- * [865] Smallest Subtree with all the Deepest Nodes
+ * [538] Convert BST to Greater Tree
  */
 
 // @lc code=start
@@ -20,9 +20,8 @@
  *     }
  * }
  */
-import java.util.*;
 class Solution {
-    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+    public TreeNode convertBST(TreeNode root) {
         
     }
 }

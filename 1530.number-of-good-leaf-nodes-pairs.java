@@ -3,8 +3,6 @@
  *
  * [1530] Number of Good Leaf Nodes Pairs
  */
-import java.util.*;
-// @lc code=start
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
