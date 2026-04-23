@@ -20,10 +20,24 @@
  *     }
  * }
  */
-import java.util.*;
 class Solution {
+    TreeNode ans;
+    int maxDepth = -1;
     public TreeNode subtreeWithAllDeepest(TreeNode root) {
-        
+        dfs(root, 0); 
+        return ans;
+    }
+    private int dfs(TreeNode root, int depth){
+        if(root == null){
+            maxDepth = Math.max(depth,maxDepth);
+            return depth;
+        }
+        int leftMax = dfs(root.left, depth + 1);
+        int rightMax = dfs(root.right, depth + 1);
+        if(leftMax == rightMax && leftMax == maxDepth){
+            ans = root;
+        }
+        return Math.max(leftMax, rightMax);
     }
 }
 // @lc code=end
