@@ -20,9 +20,23 @@
  *     }
  * }
  */
+import java.util.*;
 class Solution {
+    private int ans = 0;
     public int pathSum(TreeNode root, int targetSum) {
-        
+        HashMap<Long, Integer> map = new HashMap<>();
+        map.put(0L, 1);
+        dfs(root,0, targetSum, map);
+        return ans; 
+    }
+    private void dfs(TreeNode root, long sum, int targetSum, Map<Long, Integer> map){
+        if(root == null) return;
+        sum += root.val;
+        ans += map.getOrDefault(sum - targetSum, 0);
+        map.merge(sum, 1, Integer::sum);
+        dfs(root.left, sum, targetSum, map);
+        dfs(root.right, sum, targetSum, map);
+        map.merge(sum, -1, Integer::sum);
     }
 }
 // @lc code=end

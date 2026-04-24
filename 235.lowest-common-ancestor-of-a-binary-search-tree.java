@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=236 lang=java
+ * @lc app=leetcode id=235 lang=java
  *
- * [236] Lowest Common Ancestor of a Binary Tree
+ * [235] Lowest Common Ancestor of a Binary Search Tree
  */
 
 // @lc code=start
@@ -14,6 +14,7 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         
