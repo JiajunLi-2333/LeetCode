@@ -22,17 +22,19 @@
  */
 class Solution {
     private int ans = Integer.MAX_VALUE;
-    private Integer prev = null;
+    private int parentVal = -1;
 
     public int getMinimumDifference(TreeNode root) {
         dfs(root);
         return ans;
     }
     private void dfs(TreeNode root){
-        if(root == null) return;
+        if(root == null){
+            return;
+        }
         dfs(root.left);
-        if(prev != null) ans = Math.min(ans, root.val - prev);
-        prev = root.val;
+        if(parentVal != -1){ans = Math.min(ans, Math.abs(parentVal - root.val));}
+        parentVal = root.val;
         dfs(root.right);
     }
 }
