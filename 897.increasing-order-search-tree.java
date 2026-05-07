@@ -23,13 +23,22 @@
  * }
  */
 class Solution {
-    private TreeNode last;
+    // private TreeNode last;
     public TreeNode increasingBST(TreeNode root) {
         // TreeNode dummy = new TreeNode(-1);
         // last = dummy;
         // dfs(root);
         // return dummy.right;
+        return dfs(root, null);
     }
+    public TreeNode dfs(TreeNode root, TreeNode last){
+        if(root == null) return last;
+        TreeNode head = dfs(root.left, root);
+        root.left = null;
+        root.right = dfs(root.right, last);
+        return head;
+    }
+
     // public void dfs(TreeNode root){
     //     if(root == null) return;
     //     dfs(root.left);
