@@ -21,6 +21,7 @@
  * }
  */
 class Solution {
+<<<<<<< HEAD
     int ans = 0;
     public int rangeSumBST(TreeNode root, int low, int high) {
         // if(root == null) return 0;
@@ -50,6 +51,21 @@ class Solution {
             dfs(root.left, low, high);
         }
     }
+=======
+
+    public int rangeSumBST(TreeNode root, int low, int high) {
+       return dfs(root, low, high);
+    }
+    private int dfs(TreeNode root, int low, int high){
+        if(root == null) return 0;
+        int left = dfs(root.left, low, high);
+        int right = dfs(root.right, low, high);
+        if(root.val >= low && root.val <= high){
+            return left + right + root.val;
+        }
+        return left + right;
+    } 
+>>>>>>> 52f035e (Inorder Recursion)
 }
 // @lc code=end
 

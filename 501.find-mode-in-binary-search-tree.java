@@ -22,73 +22,33 @@
  */
 import java.util.*;
 class Solution {
-    // private Map<Integer, Integer> map = new HashMap<>();
+    int cur = 0, max = 0;
+    int prev = Integer.MIN_VALUE;
     List<Integer> list = new ArrayList<>();
-    int max = 0, prev = Integer.MIN_VALUE,count = 0;
     public int[] findMode(TreeNode root) {
-        // dfs(root);
-        // int max = 0;
-        // for(Integer key: map.keySet()){
-        //     max = Math.max(max, map.get(key));
-        // }  
-        // List<Integer> list = new ArrayList<>();
-        // for(Integer key: map.keySet()){
-        //     if(map.get(key) == max){
-        //         list.add(key);
-        //     }
-        // }
-        // int[] res = new int[list.size()];
-        // for(int i = 0; i < list.size();i++){
-        //     res[i] = list.get(i);
-        // }
-        // return res;
         dfs(root);
-        int[] res = new int[list.size()];
-        for(int i = 0; i < list.size();i++){
-            res[i] = list.get(i);
+        int[] ans = new int[list.size()];
+        for(int i = 0; i < list.size(); i++){
+            ans[i] = list.get(i);
         }
-        return res;
+        return ans;
     }
-    public void dfs(TreeNode root){
+    private void dfs(TreeNode root){
         if(root == null) return;
         dfs(root.left);
-        if(prev == Integer.MIN_VALUE){
-            prev = root.val;
-            max = 1;
-            count = 1;
-            list.add(root.val); 
-        }
-        else if(prev == root.val){
-            count++;
-            if(count > max){
-                max = count;
-                list.clear();
-                list.add(root.val);
-            }
-            else if(count == max){
-                list.add(root.val);
-            }   
-        }
-        else{
-            count = 1;
-            if(count == max){
-                list.add(root.val);
-            }
+        if(root.val == prev) cur++;
+        else cur = 1;
+        if(cur == max) list.add(root.val);
+        else if(cur > max){
+            list.clear();
+            list.add(root.val);
+            max = cur;
         }
         prev = root.val;
         dfs(root.right);
+
     } 
-    // public void dfs(TreeNode root){
-    //     if(root == null) return;
-    //     if(map.containsKey(root.val)){
-    //         map.merge(root.val, 1,Integer::sum);
-    //     }
-    //     else{
-    //         map.put(root.val, 1);
-    //     }
-    //     dfs(root.left);
-    //     dfs(root.right);
-    // }
+    
 }
 // @lc code=end
 

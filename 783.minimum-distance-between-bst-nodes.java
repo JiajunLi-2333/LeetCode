@@ -1,7 +1,7 @@
 /*
- * @lc app=leetcode id=530 lang=java
+ * @lc app=leetcode id=783 lang=java
  *
- * [530] Minimum Absolute Difference in BST
+ * [783] Minimum Distance Between BST Nodes
  */
 
 // @lc code=start
@@ -22,20 +22,18 @@
  */
 class Solution {
     int min = Integer.MAX_VALUE;
-    TreeNode prev = null;
-
-    public int getMinimumDifference(TreeNode root) {
-       dfs(root);
-       return min;
+    int prev = - 1;
+    public int minDiffInBST(TreeNode root) {
+        dfs(root);
+        return min;
     }
-
     private void dfs(TreeNode root){
-        if(root == null) return;
+        if (root == null) return;
         dfs(root.left);
-        if(prev != null){
-            min = Math.min(min, root.val - prev.val);
-        }  
-        prev = root;
+        if(prev != -1){
+            min = Math.min(min, root.val - prev);
+        }
+        prev = root.val;
         dfs(root.right);
     }
     
