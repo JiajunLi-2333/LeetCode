@@ -27,7 +27,7 @@ class Solution {
         return dfs(root);
     }
     private int dfs(TreeNode root){
-        if(root == null) return -1;
+        if(root == null) return - 1;
         int left = dfs(root.left);
         if(left != -1) return left;
         k--;

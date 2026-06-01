@@ -23,24 +23,38 @@
 import java.util.*;
 class Solution {
     private List<List<Integer>> ans = new ArrayList<>();
-    private int targetSum = 0;
+    // private int targetSum = 0;
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
-        this.targetSum = targetSum;
-        List<Integer> cur = new ArrayList<>();
-        dfs(root, cur, 0);
-        return ans; 
+        // this.targetSum = targetSum;
+        // List<Integer> cur = new ArrayList<>();
+        // dfs(root, cur, 0);
+        // return ans;
+        dfs(root, targetSum, new ArrayList<>());
+        return ans;
     }
-    private void dfs(TreeNode root, List<Integer> cur, int sum){
+    private void dfs(TreeNode root, int targetSum, List<Integer> prev){
         if(root == null) return;
-        cur.add(root.val);
-        sum += root.val;
-        if(sum == targetSum && root.left == null && root.right == null){
-            ans.add(new ArrayList<>(cur));
+        int val = root.val;
+        targetSum -= val;
+        List<Integer> newPrev = new ArrayList<>(prev);
+        newPrev.add(root.val);
+        if(root.left == null && root.right == null && targetSum == 0){
+            ans.add(new ArrayList<>(newPrev));
         }
-        dfs(root.left, cur, sum);
-        dfs(root.right, cur, sum);
-        cur.remove(cur.size() -1);
+        dfs(root.left, targetSum, newPrev);
+        dfs(root.right, targetSum, newPrev);
     }
+    // private void dfs(TreeNode root, List<Integer> cur, int sum){
+    //     if(root == null) return;
+    //     cur.add(root.val);
+    //     sum += root.val;
+    //     if(sum == targetSum && root.left == null && root.right == null){
+    //         ans.add(new ArrayList<>(cur));
+    //     }
+    //     dfs(root.left, cur, sum);
+    //     dfs(root.right, cur, sum);
+    //     cur.remove(cur.size() -1);
+    // }
 }
 // @lc code=end
 
