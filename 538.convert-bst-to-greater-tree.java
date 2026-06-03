@@ -22,7 +22,14 @@
  */
 class Solution {
     public TreeNode convertBST(TreeNode root) {
-        
+        dfs(root, 0);
+        return root;
+    }
+    private int dfs(TreeNode root, int rightSum){
+        if(root == null) return rightSum;
+        int right = dfs(root.right, rightSum);
+        root.val += right;
+        return dfs(root.left, root.val);
     }
 }
 // @lc code=end

@@ -26,17 +26,20 @@ class Solution {
        dfs(root);
        return ans;
     }
-    //[the min of the subtree, the max of the subtree]
-    private long[] dfs(TreeNode root){
-        if(root == null) return new long[]{Long.MAX_VALUE, Long.MIN_VALUE};
-        long[] left = dfs(root.left);
-        long[] right = dfs(root.right);
-        long val = root.val;
-        if(val <= left[1] || val >= right[0]){
-            ans = false;
-            return new long[]{Long.MIN_VALUE, Long.MAX_VALUE};
-        } 
-        return new long[]{Math.min(val, left[0]), Math.max(val, right[1])};
+    //[the min of the subtree, the max of the subtree] based on the nature of BST
+    // private long[] dfs(TreeNode root){
+    //     if(root == null) return new long[]{Long.MAX_VALUE, Long.MIN_VALUE};
+    //     long[] left = dfs(root.left);
+    //     long[] right = dfs(root.right);
+    //     long val = root.val;
+    //     if(val <= left[1] || val >= right[0]){
+    //         ans = false;
+    //         return new long[]{Long.MIN_VALUE, Long.MAX_VALUE};
+    //     } 
+    //     return new long[]{Math.min(val, left[0]), Math.max(val, right[1])};
+    // }
+    private int dfs(TreeNode root, int prev){
+        if(root == null) return  
     }
 
     
